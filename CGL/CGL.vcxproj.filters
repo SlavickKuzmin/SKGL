@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="refreshOnGPU.cu">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="refreshOnGPU.cuh">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Screen.cpp">
+      <Filter>GPU</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>GPU</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="our_gl.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="resreshOnCPU.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="tgaimage.cpp">
+      <Filter>Utilitis</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>Utilitis</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Screen.h">
+      <Filter>GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="our_gl.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="refreshOnCPU.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="tgaimage.h">
+      <Filter>Utilitis</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Utilitis</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GPU">
+      <UniqueIdentifier>{86afa15d-7d0c-4672-a874-90e41516ecf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CPU">
+      <UniqueIdentifier>{1c2942d3-3ff4-476b-9682-fcd34144a428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilitis">
+      <UniqueIdentifier>{d25619ff-d746-4bcc-a457-afeab6d4340e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
