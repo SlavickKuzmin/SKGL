@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Utilites">
+      <UniqueIdentifier>{db79da46-cbc3-4733-83b4-bdcf7665494f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{e8273f40-03a8-437c-8c87-4fa059cf71e9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="model.cpp">
+      <Filter>Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="tgaimage.cpp">
+      <Filter>Utilites</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="geometry.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="our_gl.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="resreshOnCPU.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="model.h">
+      <Filter>Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="tgaimage.h">
+      <Filter>Utilites</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="our_gl.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="refreshOnCPU.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

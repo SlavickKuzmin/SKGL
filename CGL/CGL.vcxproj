@@ -19,13 +19,9 @@
       <FileType>CppCode</FileType>
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
-    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
-    <ClCompile Include="our_gl.cpp" />
-    <ClCompile Include="resreshOnCPU.cpp" />
     <ClCompile Include="Screen.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="tgaimage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,19 +29,23 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
-    <ClInclude Include="geometry.h" />
+    <CudaCompile Include="cuda_geometry.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </CudaCompile>
+    <ClInclude Include="cuda_gl.cuh" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="our_gl.h" />
-    <ClInclude Include="refreshOnCPU.h" />
-    <CudaCompile Include="refreshOnGPU.cuh">
+    <CudaCompile Include="cuda_geometry.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </CudaCompile>
+    <CudaCompile Include="cuda_gl.cu" />
+    <CudaCompile Include="Helpers.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="refreshOnGPU.cu">
+    <CudaCompile Include="Helpers.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemGroup>
