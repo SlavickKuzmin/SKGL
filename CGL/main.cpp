@@ -31,9 +31,9 @@ void runGPURender()
 		SDL_WINDOW_SHOWN);
 	
 	// my inits
-	Screen screen(width, height);
-	for(int i = 0; i < width; i++)
-			screen.setPixel(i, i, Color(255, 0, 0, 255));
+	Screen *screen = new Screen(width, height);
+	for(int i = 0; i < height; i++)
+			screen->setPixel(i, height-i, 0xFFFF0000);
 
 	bool quit = false;
 
@@ -52,7 +52,8 @@ void runGPURender()
 				quit = true;
 			}
 		}
-		screen.setScreen(window);
+		runKernel(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height);
+		screen->setScreen(window);
 	}
 
 	SDL_DestroyWindow(window);
@@ -72,9 +73,6 @@ void runRender()
 
 	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
 	RenderOnCpu *cpuRenderer = new RenderOnCpu(model, width, height, renderer);
-	RenderOnGPU *gpuRenderer = new RenderOnGPU(model, width, height, renderer);
-
-	//gpuRenderer->printDeviceInfo();
 
 	Shader *shader = new Shader(cpuRenderer->getModel(), cpuRenderer->getLight_dir());
 	cpuRenderer->setShader(shader);
@@ -97,9 +95,7 @@ void runRender()
 			}
 		}
 
-		//cpuRenderer->refresh();
-		//gpuRenderer->refresh();
-		//runKernel();
+		cpuRenderer->refresh();
 		SDL_RenderPresent(renderer);
 	}
 
@@ -108,8 +104,6 @@ void runRender()
 	SDL_Quit();
 
 	delete cpuRenderer;
-	delete gpuRenderer;
-
 	delete model;
 	delete shader;
 }

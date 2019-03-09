@@ -7,13 +7,16 @@
     <CudaCompile Include="refreshOnGPU.cuh">
       <Filter>GPU</Filter>
     </CudaCompile>
+    <CudaCompile Include="Color.cuh">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Color.cu">
+      <Filter>GPU</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Screen.cpp">
-      <Filter>GPU</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
       <Filter>GPU</Filter>
     </ClCompile>
     <ClCompile Include="geometry.cpp">
@@ -37,9 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen.h">
-      <Filter>GPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
       <Filter>GPU</Filter>
     </ClInclude>
     <ClInclude Include="geometry.h">

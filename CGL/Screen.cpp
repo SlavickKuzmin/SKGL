@@ -32,28 +32,15 @@ Screen::~Screen()
 	SDL_FreeSurface(pixels);
 }
 
-void Screen::setPixel(int x, int y, Color& color)
+void Screen::setPixel(int x, int y, Uint32 color)
 {
 	Uint8 *pixel = (Uint8*)pixels->pixels;
 	pixel += (y * pixels->pitch) + (x * sizeof(Uint32));
-	*((Uint32*)pixel) = color.getColor();//abgr
-}
-
-Color Screen::getPixel(int x, int y)
-{
-	Uint8 *pixel = (Uint8*)pixels->pixels;
-	pixel += (y * pixels->pitch) + (x * sizeof(Uint32));
-	ColorByte r = (*((Uint32*)pixel)) & 0xFF;
-	ColorByte g = (*((Uint32*)pixel) >> 8) & 0xFF;
-	ColorByte b = (*((Uint32*)pixel) >> 16) & 0xFF;
-	ColorByte a = (*((Uint32*)pixel) >> 24) & 0xFF;
-	return Color(r, g, b, a);
+	*((Uint32*)pixel) = color;//abgr
 }
 
 void Screen::setScreen(SDL_Window *window)
 {
-	printf("s-");
 	SDL_BlitSurface(pixels, 0, SDL_GetWindowSurface(window), 0);
 	SDL_UpdateWindowSurface(window);
-	printf("e");
 }

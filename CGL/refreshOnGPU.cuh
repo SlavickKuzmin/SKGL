@@ -26,29 +26,15 @@
 #include <SDL.h>
 #undef main
 
+#include "Screen.h"
+#include "Color.cuh"
+
 // GPU headers
 
-__global__ void kernel();
-__host__ void runKernel();
+__global__ void kernel(void* pixels, int pinch, int width, int height);
+__host__ void runKernel(void* pixels, int pinch, int width, int height);
 
-class RenderOnGPU
-{
-public:
-	// copy model to GPU memory and renderer
-	RenderOnGPU(Model *model, int width, int height, SDL_Renderer *renderer);
-	//clear all allocated memory
-	~RenderOnGPU();
-	void line(int x0, int y0, int x1, int y1, TGAColor color);
-	void drawModel();
-	void refresh();
-	void printDeviceInfo();
-private:
-	Model *gModel;
-	SDL_Renderer *cpuRenderer;
-	SDL_Renderer *gpuRenderer;
-	int width;
-	int height;
-	void cudasafe(int error, char* message, char* file, int line);
-};
+__host__ void printDeviceInfo();
+__host__ void cudasafe(int error, char* message, char* file, int line);
 
 #endif // !RefreshOnGPU_CUH_
