@@ -12,14 +12,14 @@ void printDeviceInfo()
 {
 	int deviceCount;
 
-	cudasafe(cudaGetDeviceCount(&deviceCount), "GetDeviceCount", __FILE__, __LINE__);
+	cudasafe(cudaGetDeviceCount(&deviceCount), "GetDeviceCount", (char*)__FILE__, __LINE__);
 
 	printf("Number of CUDA devices %d.\n", deviceCount);
 
 	for (int dev = 0; dev < deviceCount; dev++) {
 		cudaDeviceProp deviceProp;
 
-		cudasafe(cudaGetDeviceProperties(&deviceProp, dev), "Get Device Properties", __FILE__, __LINE__);
+		cudasafe(cudaGetDeviceProperties(&deviceProp, dev), "Get Device Properties", (char*)__FILE__, __LINE__);
 
 		if (dev == 0) {
 			if (deviceProp.major == 9999 && deviceProp.minor == 9999) {
@@ -38,7 +38,7 @@ void printDeviceInfo()
 		printf("Device name:                %s\n", deviceProp.name);
 		printf("Major revision number:      %d\n", deviceProp.major);
 		printf("Minor revision Number:      %d\n", deviceProp.minor);
-		printf("Total Global Memory:        %zu\n", deviceProp.totalGlobalMem);
+		printf("Total Global Memory:        %u\n", deviceProp.totalGlobalMem);
 		printf("Total shared mem per block: %d\n", deviceProp.sharedMemPerBlock);
 		printf("Total const mem size:       %d\n", deviceProp.totalConstMem);
 		printf("Warp size:                  %d\n", deviceProp.warpSize);
@@ -50,7 +50,7 @@ void printDeviceInfo()
 			deviceProp.maxGridSize[1], \
 			deviceProp.maxGridSize[2]);
 		printf("Clock Rate:                 %d\n", deviceProp.clockRate);
-		printf("Number of muliprocessors:   %d\n", deviceProp.multiProcessorCount);
+		printf("Number of muliprocessors:   %zd\n", deviceProp.multiProcessorCount);
 		printf("\nPress any key to continue...\n");
 		getchar();
 	}

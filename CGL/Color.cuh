@@ -4,7 +4,7 @@
 
 #define ColorByte unsigned char
 
-__device__ struct Color
+struct Color
 {
 	ColorByte red;
 	ColorByte green;
