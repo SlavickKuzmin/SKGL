@@ -61,7 +61,7 @@ struct TGAColor {
 };
 
 class TGAImage {
-protected:
+public:
     unsigned char* data;
     int width;
     int height;
@@ -69,7 +69,7 @@ protected:
 
     bool   load_rle_data(std::ifstream &in);
     bool unload_rle_data(std::ofstream &out);
-public:
+
     enum Format {
         GRAYSCALE=1, RGB=3, RGBA=4
     };

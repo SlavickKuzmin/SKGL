@@ -28,6 +28,10 @@ void runRender()
 	SDL_RenderClear(renderer);
 
 	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
+	//Model *model = new Model("E:\\3d\\stature\\statue.obj");
+	//Model *model = new Model("e:\\3d\\b2\\bird.obj");
+	printf("ok\n");
+	//getchar();
 	RenderOnCpu *cpuRenderer = new RenderOnCpu(model, width, height, renderer);
 
 	Shader *shader = new Shader(cpuRenderer->getModel(), cpuRenderer->getLight_dir());

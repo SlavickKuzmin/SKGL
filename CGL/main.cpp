@@ -3,7 +3,7 @@
 #include <SDL.h>
 #undef main
 
-#include "Helpers.cuh"
+#include "RenderOnGPU.cuh"
 
 #include "Screen.h"
 
@@ -35,6 +35,7 @@ void runGPURender()
 	//		screen->setPixel(i, height-i, 0xFFFF0000);
 
 	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
+	RenderOnGPU *render = new RenderOnGPU(model, width, height);
 
 	bool quit = false;
 
@@ -54,13 +55,15 @@ void runGPURender()
 			}
 		}
 		//runKernel(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height);
-		drawModel(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height, model);
+		//drawModel(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height, model);
+		render->refresh(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height);
 		screen->setScreen(window);
 	}
 
 
 	delete model;
 	delete screen;
+	delete render;
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }

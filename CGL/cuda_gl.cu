@@ -1,15 +1,4 @@
-#include "math.h"
-#include <limits.h>
-#include <cstdlib>
-#include <algorithm>
 #include "cuda_gl.cuh"
-#include "Helpers.cuh"
-
-//Matrix ModelView; 
-//Matrix Viewport;
-//Matrix Projection;
-
-//IShader::~IShader() {}
 
 const int width = 800;
 const int height = 800;
@@ -57,7 +46,7 @@ __device__ Vec3f barycentric(Vec2f A, Vec2f B, Vec2f C, Vec2i P) {
 	return Vec3f(-1, 1, 1); // in this case generate negative coordinates, it will be thrown away by the rasterizator
 }
 
-__device__ void triangle(mat<4, 3, float> &clipc, IShader &shader, void *pixels, int pinch, float *zbuffer, Matrix &Viewport) {
+__device__ void triangle(mat<4, 3, float> &clipc, Shader &shader, void *pixels, int pinch, float *zbuffer, Matrix &Viewport) {
 	mat<3, 4, float> pts = (Viewport*clipc).transpose(); // transposed to ease access to each of the points
     mat<3, 2, float> pts2;
 	for (int i = 0; i < 3; i++) pts2[i] = proj<2>(pts[i] / pts[i][3]);
@@ -80,7 +69,7 @@ __device__ void triangle(mat<4, 3, float> &clipc, IShader &shader, void *pixels,
 			bc_clip = bc_clip / (bc_clip.x + bc_clip.y + bc_clip.z);
 			float frag_depth = clipc[2] * bc_clip;
 			if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z<0 || zbuffer[P.x + P.y*width]>frag_depth) continue; // 800 - image with
-			bool discard = shader.fragment(bc_clip, color);
+			bool discard = true;//= shader.fragment(bc_clip, TGAColor());
 			if (!discard) {
 				zbuffer[P.x + P.y*width] = frag_depth;//image.width
 				//setPixel(pixels, pinch, P.x, P.y, color);
