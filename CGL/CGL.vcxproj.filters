@@ -7,9 +7,6 @@
     <CudaCompile Include="Color.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="cuda_gl.cu">
-      <Filter>GPU</Filter>
-    </CudaCompile>
     <CudaCompile Include="cuda_geometry.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
@@ -25,13 +22,7 @@
     <CudaCompile Include="ModelBuffer.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="ImageBuffer.cu">
-      <Filter>GPU</Filter>
-    </CudaCompile>
     <CudaCompile Include="RenderOnGPU.cu">
-      <Filter>GPU</Filter>
-    </CudaCompile>
-    <CudaCompile Include="Shader.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
   </ItemGroup>
@@ -57,19 +48,10 @@
     <ClInclude Include="model.h">
       <Filter>Utilitis</Filter>
     </ClInclude>
-    <ClInclude Include="cuda_gl.cuh">
-      <Filter>GPU</Filter>
-    </ClInclude>
     <ClInclude Include="ModelBuffer.cuh">
       <Filter>GPU</Filter>
     </ClInclude>
-    <ClInclude Include="ImageBuffer.cuh">
-      <Filter>GPU</Filter>
-    </ClInclude>
     <ClInclude Include="RenderOnGPU.cuh">
-      <Filter>GPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.cuh">
       <Filter>GPU</Filter>
     </ClInclude>
   </ItemGroup>

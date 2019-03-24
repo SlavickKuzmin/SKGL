@@ -23,14 +23,10 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="tgaimage.cpp" />
-    <CudaCompile Include="ImageBuffer.cu" />
     <CudaCompile Include="ModelBuffer.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
     <CudaCompile Include="RenderOnGPU.cu">
-      <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
-    </CudaCompile>
-    <CudaCompile Include="Shader.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemGroup>
@@ -40,24 +36,22 @@
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
     <CudaCompile Include="cuda_geometry.cuh">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
-    <ClInclude Include="cuda_gl.cuh" />
-    <ClInclude Include="ImageBuffer.cuh" />
     <ClInclude Include="model.h" />
     <CudaCompile Include="cuda_geometry.cu">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </CudaCompile>
-    <CudaCompile Include="cuda_gl.cu">
-      <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
-    </CudaCompile>
     <CudaCompile Include="Helpers.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
-    <ClInclude Include="ModelBuffer.cuh" />
-    <ClInclude Include="RenderOnGPU.cuh" />
+    <ClInclude Include="ModelBuffer.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="RenderOnGPU.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="Shader.cuh" />
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <ItemGroup>

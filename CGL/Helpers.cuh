@@ -32,8 +32,7 @@
 // GPU headers
 
 __device__ void setPixel(void* pixels, int pinch, int x, int y, Color color);
-__global__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch);
-__host__ void drawModel(void* pixels, int pinch, int width, int height, Model *model);
+__device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch);
 
 __host__ void printDeviceInfo();
 __host__ void cudasafe(int error, char* message, char* file, int line);

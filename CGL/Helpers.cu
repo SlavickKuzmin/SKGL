@@ -70,7 +70,7 @@ __device__ void swap(int &x, int &y)
 	y = tmp;
 }
 
-__global__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch) {
+__device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch) {
 	Color col;
 	col.alpha = 255;
 	col.red = 255;
@@ -86,43 +86,20 @@ __global__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch) {
 		swap(x0, x1);
 		swap(y0, y1);
 	}
-
+	//printf("start\n");
 	for (int x = x0; x <= x1; x++) {
 		float t = (x - x0) / (float)(x1 - x0);
 		int y = y0 * (1. - t) + y1 * t;
 		if (steep) {
+			//printf("s1 x=%d,y=%d", x, y);
 			setPixel(pixels, pinch, y, x, col); // if transposed, de-transpose
+			//printf("e1");
 		}
 		else {
+			//printf("s x=%d,y=%d", x, y);
 			setPixel(pixels, pinch, x, y, col);
+			//printf("e");
 		}
 	}
-}
-
-__host__ void drawModel(void* pixels, int pinch, int width, int height, Model *model)
-{
-	void *gpuPixels;
-
-	int size = height * pinch;
-	cudaMalloc((void**)&gpuPixels, size);
-	cudaMemcpy(gpuPixels, pixels, size, cudaMemcpyHostToDevice);
-
-	for (int i = 0; i < model->nfaces(); i++) {
-		std::vector<int> face = model->face(i);
-		for (int j = 0; j < 3; j++) {
-			Vec3f v0 = model->vert(face[j]);
-			Vec3f v1 = model->vert(face[(j + 1) % 3]);
-			int x0 = (v0.x + 1.)*width / 2.;
-			int y0 = (v0.y + 1.)*height / 2.;
-			int x1 = (v1.x + 1.)*width / 2.;
-			int y1 = (v1.y + 1.)*height / 2.;
-			line<<<1,1>>>(x0, y0, x1, y1, gpuPixels, pinch);
-			cudaDeviceSynchronize();
-		}
-	}
-
-	printf(".");
-
-	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);
-	cudaFree(gpuPixels);
+	//printf("end\n");
 }

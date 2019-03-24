@@ -125,9 +125,9 @@ public:
 		return ret;
 	}
 
-	__device__ void set_col(size_t idx, vec<DimRows, T> v) {
+	__device__ void set_col(size_t idx, vec<DimRows, T> *v) {
 		assert(idx < DimCols);
-		for (size_t i = DimRows; i--; rows[i][idx] = v[i]);
+		for (size_t i = DimRows; i--; rows[i][idx] = (*v)[i]);
 	}
 
 	__device__ static mat<DimRows, DimCols, T> identity() {

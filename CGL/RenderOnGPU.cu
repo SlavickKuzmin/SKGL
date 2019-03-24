@@ -1,69 +1,77 @@
 #include "RenderOnGPU.cuh"
 
 
-RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
+RenderOnGPU::RenderOnGPU(ModelBuffer *model, int width, int height)
 {
 	this->width = width;
 	this->height = height;
 
 	// make model
 	this->model = model;
-
-	this->renderer = renderer;
-
-	// init z-buffer
-	this->zbuffer = new float[width*height];
-	for (int i = width * height; i--; this->zbuffer[i] = -std::numeric_limits<float>::max());
-}
-
-__device__ void RenderOnGPU::devInit()
-{
-	this->light_dir = Vec3f(1, 1, 1);
-	this->eye = Vec3f(1, 1, 3);
-	this->center = Vec3f(0, 0, 0);
-	this->up = Vec3f(0, 5, 100);
-
-	// init lookat, viewport, proj matrix and light dir
-	// TODO: move in refresh method
-
-	lookat(eye, center, up, ModelView);
-	viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4, Viewport);
-	projection(-1.f / (eye - center).norm(), Projection);
-	light_dir = proj<3>((Projection*ModelView*embed<4>(light_dir, 0.f))).normalize();
-
 }
 
 RenderOnGPU::~RenderOnGPU()
 {
-	delete[] this->zbuffer;
+	delete model;
 }
 
-void RenderOnGPU::setShader(Shader *shader)
+__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last)
 {
-	//cuda memcpy
-	this->shader = shader;
-}
-
-Model* RenderOnGPU::getModel()
-{
-	// -- cuda memcpy dev to dev
-	return this->model;
-}
-
-Vec3f* RenderOnGPU::getLight_dir()
-{
-	return &(this->light_dir);
-}
-
-__global__ void drawModel(Shader *shader, ModelBuffer &mb, Matrix ModelView, Matrix Projection, Matrix Viewport,
-	float *zbuffer)
-{
-	for (int i = 0; i < mb.nfaces; i++) {
+	for (int i = first; i < last; i++) {
 		for (int j = 0; j < 3; j++) {
-			shader->vertex(i, j, ModelView, Projection, mb.uv(i, j), mb.normal(i, j), mb.vert(i, j));
+			Vec3f v0 = mb.vert(mb.face(i, j));
+			Vec3f v1 = mb.vert(mb.face(i, (j + 1) % 3));
+			int x0 = (v0.x + 1.f)*width / 2.f;
+			int y0 = (v0.y + 1.f)*height / 2.f;
+			int x1 = (v1.x + 1.f)*width / 2.f;
+			int y1 = (v1.y + 1.f)*height / 2.f;
+			line(x0, y0, x1, y1, pixels, pinch);
 		}
-		//triangle(shader->varying_tri, *shader, zbuffer, Viewport);// pixels and pinch ....
 	}
+}
+
+__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb)
+{
+	//printf("s");
+	int idx = blockIdx.x;
+	//printf("idx=%d\n", idx);
+	//5022
+	// 0 => 3000
+	// 3000 => 5022
+	//printf("size=%d\n", *(mb.nfaces));
+	printf(".");
+	//for (int i = 0; i < *(mb.nfaces); i++) {
+	//	for (int j = 0; j < 3; j++) {
+	//		Vec3f v0 = mb.vert(mb.face(i, j));
+	//		Vec3f v1 = mb.vert(mb.face(i, (j + 1) % 3));
+	//		int x0 = (v0.x + 1.f)*width / 2.f;
+	//		int y0 = (v0.y + 1.f)*height / 2.f;
+	//		int x1 = (v1.x + 1.f)*width / 2.f;
+	//		int y1 = (v1.y + 1.f)*height / 2.f;
+	//		line(x0, y0, x1, y1, pixels, pinch);
+	//	}
+	//}
+	if(idx == 0)
+	{
+		part(pixels,pinch,width,height,mb, 0, 1000);
+	}
+	else if (idx == 1)
+	{
+		part(pixels, pinch, width, height, mb, 1000, 2000);
+	}
+	else if (idx == 2)
+	{
+		part(pixels, pinch, width, height, mb, 2000, 3000);
+	}
+	else if (idx == 3)
+	{
+		part(pixels, pinch, width, height, mb, 3000, 4000);
+	}
+	else if (idx == 4)
+	{
+		part(pixels, pinch, width, height, mb, 4000, 5022);
+	}
+	//printf("e");
 }
 
 void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
@@ -74,13 +82,12 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 	cudaMalloc((void**)&gpuPixels, size);
 	cudaMemcpy(gpuPixels, pixels, size, cudaMemcpyHostToDevice);
 
-	float *zBufferGPU;
-	cudaMalloc((void**)zBufferGPU, width*height*sizeof(float));
-	cudaMemcpy(zBufferGPU, zbuffer, width*height * sizeof(float), cudaMemcpyHostToDevice);
-
-	ModelBuffer mBuf(model);
-	drawModel<<<1,1>>>(this->shader, mBuf, ModelView, Projection, Viewport, zBufferGPU);
+	//drawModel<<<1,1>>>(this->shader, mb, ModelView, Projection, Viewport, zBufferGPU, pixels, pinch, width, height);
 	
+	/*drawModel << <1, 1 >> > (this->shader, mBuf, ModelView, Projection, Viewport, zBufferGPU, pixels, pinch, width, height);
+	cudaDeviceSynchronize();*/
+	draw<<<5, 1>>> (gpuPixels, pinch, width, height, *model);
+	cudaDeviceSynchronize();
 
 	//for (int i = 0; i < model->nfaces(); i++) {
 	//	std::vector<int> face = model->face(i);
@@ -96,11 +103,10 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 	//	}
 	//}
 
-	printf(".");
+	//printf(".");
 
 	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);
 	cudaFree(gpuPixels);
-	cudaFree(zBufferGPU);
 	//printf("start-");
 
 	//for (int i = 0; i < model->nfaces(); i++) {

@@ -35,7 +35,9 @@ void runGPURender()
 	//		screen->setPixel(i, height-i, 0xFFFF0000);
 
 	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
-	RenderOnGPU *render = new RenderOnGPU(model, width, height);
+	ModelBuffer mBuf(model);
+
+	RenderOnGPU *render = new RenderOnGPU(&mBuf, width, height);
 
 	bool quit = false;
 
