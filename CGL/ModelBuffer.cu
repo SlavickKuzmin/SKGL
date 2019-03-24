@@ -72,7 +72,6 @@ ModelBuffer::~ModelBuffer()
 __device__ Vec3f ModelBuffer::normal(int iface, int nthvert)
 {
 	int inx0 = (faces_[*nfacesElem * iface + nthvert])[2];
-	//int idx = faces_[iface][nthvert][2];
 	return norms_[inx0].normalize();
 }
 
@@ -97,6 +96,9 @@ __device__ Vec2f ModelBuffer::uv(int iface, int nthvert)
 __device__ int ModelBuffer::face(int i, int idx) {
 	return (faces_[*nfacesElem*i+idx])[0];
 }
+
+//__fmaf_rd:
+//x * y + z
 
 //width * i + j
 

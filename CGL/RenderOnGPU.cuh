@@ -3,6 +3,7 @@
 #include "ModelBuffer.cuh"
 #include "cuda_runtime_api.h"
 #include "Helpers.cuh"
+#include <time.h>
 
 class RenderOnGPU
 {

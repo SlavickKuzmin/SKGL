@@ -32,7 +32,8 @@
 // GPU headers
 
 __device__ void setPixel(void* pixels, int pinch, int x, int y, Color color);
-__device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch);
+__device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch, Color *col);
+__device__ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, void* pixels, int pinch, Color *col);
 
 __host__ void printDeviceInfo();
 __host__ void cudasafe(int error, char* message, char* file, int line);
