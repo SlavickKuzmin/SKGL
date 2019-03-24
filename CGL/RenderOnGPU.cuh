@@ -7,7 +7,7 @@
 class RenderOnGPU
 {
 public:
-	RenderOnGPU(ModelBuffer *model, int width, int height);
+	RenderOnGPU(Model *model, int width, int height);
 	~RenderOnGPU();
 	void refresh(void* pixels, int pinch, int width, int height);
 private:
