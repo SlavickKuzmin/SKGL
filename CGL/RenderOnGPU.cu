@@ -40,10 +40,14 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 			Vec3f world_coords = mb.vert(mb.face(i,j));
 			screen_coords[j] = Vec2i((world_coords.x + 1.)*width / 2., (world_coords.y + 1.)*height / 2.);
 		}
-		//triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
 		line(screen_coords[0].x, screen_coords[0].y, screen_coords[1].x, screen_coords[1].y, pixels, pinch, &col);
 		line(screen_coords[1].x, screen_coords[1].y, screen_coords[2].x, screen_coords[2].y, pixels, pinch, &col);
 		line(screen_coords[2].x, screen_coords[2].y, screen_coords[0].x, screen_coords[0].y, pixels, pinch, &col);
+
+		// Linew render
+		/*line(screen_coords[0].x, screen_coords[0].y, screen_coords[1].x, screen_coords[1].y, pixels, pinch, &col);
+		line(screen_coords[1].x, screen_coords[1].y, screen_coords[2].x, screen_coords[2].y, pixels, pinch, &col);
+		line(screen_coords[2].x, screen_coords[2].y, screen_coords[0].x, screen_coords[0].y, pixels, pinch, &col);*/
 	}
 }
 
@@ -55,23 +59,83 @@ __global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer
 	printf(".");
 	if(idx == 0)
 	{
-		part(pixels,pinch,width,height,mb, 0, 1000);
+		part(pixels,pinch,width,height,mb, 0, 250);
 	}
 	else if (idx == 1)
 	{
-		part(pixels, pinch, width, height, mb, 1000, 2000);
+		part(pixels, pinch, width, height, mb, 250, 400);
 	}
 	else if (idx == 2)
 	{
-		part(pixels, pinch, width, height, mb, 2000, 3000);
+		part(pixels, pinch, width, height, mb, 400, 750);
 	}
 	else if (idx == 3)
 	{
-		part(pixels, pinch, width, height, mb, 3000, 4000);
+		part(pixels, pinch, width, height, mb, 750, 1000);
 	}
 	else if (idx == 4)
 	{
-		part(pixels, pinch, width, height, mb, 4000, 5022);
+		part(pixels, pinch, width, height, mb, 1000, 1250);
+	}
+	else if (idx == 5)
+	{
+		part(pixels, pinch, width, height, mb, 1250, 1500);
+	}
+	else if (idx == 6)
+	{
+		part(pixels, pinch, width, height, mb, 1500, 1750);
+	}
+	else if (idx == 7)
+	{
+		part(pixels, pinch, width, height, mb, 1750, 2000);
+	}
+	else if (idx == 8)
+	{
+		part(pixels, pinch, width, height, mb, 2000, 2250);
+	}
+	else if (idx == 9)
+	{
+		part(pixels, pinch, width, height, mb, 2250, 2500);
+	}
+	else if (idx == 10)
+	{
+		part(pixels, pinch, width, height, mb, 2500, 2750);
+	}
+	else if (idx == 11)
+	{
+		part(pixels, pinch, width, height, mb, 2750, 3000);
+	}
+	else if (idx == 12)
+	{
+		part(pixels, pinch, width, height, mb, 3000, 3250);
+	}
+	else if (idx == 13)
+	{
+		part(pixels, pinch, width, height, mb, 3250, 3500);
+	}
+	else if (idx == 14)
+	{
+		part(pixels, pinch, width, height, mb, 3500, 3750);
+	}
+	else if (idx == 15)
+	{
+		part(pixels, pinch, width, height, mb, 3750, 4000);
+	}
+	else if (idx == 16)
+	{
+		part(pixels, pinch, width, height, mb, 4000, 4250);
+	}
+	else if (idx == 17)
+	{
+		part(pixels, pinch, width, height, mb, 4250, 4500);
+	}
+	else if (idx == 18)
+	{
+		part(pixels, pinch, width, height, mb, 4500, 4750);
+	}
+	else if (idx == 19)
+	{
+		part(pixels, pinch, width, height, mb, 4750, 5022);
 	}
 	//printf("e");
 }
@@ -86,13 +150,13 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 
 	clock_t begin = clock();
 
-	draw <<<5, 1 >>> (gpuPixels, pinch, width, height, *model);
+	draw <<<20, 1 >>> (gpuPixels, pinch, width, height, *model);
 	cudaDeviceSynchronize();
 
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	printf("time: %lf\n", elapsed_secs);
+	//printf("time: %lf\n", elapsed_secs);
 
 
 	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);

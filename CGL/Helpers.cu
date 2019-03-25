@@ -56,7 +56,7 @@ void printDeviceInfo()
 	}
 }
 
-__device__ void setPixel(void* pixels, int pinch, int x, int y, Color color)
+__device__ __forceinline__ void setPixel(void* pixels, int pinch, int x, int y, Color color)
 {
 	Uint8 *pixel = (Uint8*)pixels;
 	pixel += ((800-y) * pinch) + (x * sizeof(Uint32));
@@ -94,7 +94,7 @@ __device__ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, void* pixels, int pinch, 
 		if (A.x > B.x) swapVec2i(A, B);
 		for (int j = A.x; j <= B.x; j++) {
 			//image.set(j, t0.y + i, color); // attention, due to int casts t0.y+i != A.y
-			setPixel(pixels, pinch, j, t0.y + i, *col);
+			setPixel(pixels, pinch, 10, 10, *col);
 		}
 	}
 }
