@@ -1,6 +1,5 @@
 #include "RenderOnGPU.cuh"
 
-
 RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 {
 	this->width = width;
@@ -9,35 +8,90 @@ RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 	ModelBuffer *mb = new ModelBuffer(model);
 	// make model
 	this->model = mb;
+	this->m = model;
+
+	zbuffer = new int[width*height];
+	for (int i = 0; i < width*height; i++) {
+		zbuffer[i] = std::numeric_limits<int>::min();
+	}
 }
 
 RenderOnGPU::~RenderOnGPU()
 {
 	delete model;
+	delete[] zbuffer;
 }
 
-__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last)
+__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last, int *zbuffer)
 {
+	//printf("f=%d, l=%d\n", first, last);
+	
+	// old
+	Vec3f light_dir(0, 0, -1);//todo remove it
+	const int depth = 255;//todo it too
 	for (int i = first; i < last; i++) {
 		Vec2i screen_coords[3];
+		Vec3f world_coords[3];
 		for (int j = 0; j < 3; j++) {
-			Vec3f world_coords = mb.vert(mb.face(i,j));
-			screen_coords[j] = Vec2i((world_coords.x + 1.)*width / 2., (world_coords.y + 1.)*height / 2.);
+			Vec3f v = mb.vert(mb.face(i, j));
+			screen_coords[j] = Vec2i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2.);
+			world_coords[j] = v;
 		}
-		Color col;
-		col.alpha = 255;
-		col.red = 255;
-		col.green = 10;
-		col.blue = 0;
-		triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
-		// Linew render
-		/*line(screen_coords[0].x, screen_coords[0].y, screen_coords[1].x, screen_coords[1].y, pixels, pinch, &col);
-		line(screen_coords[1].x, screen_coords[1].y, screen_coords[2].x, screen_coords[2].y, pixels, pinch, &col);
-		line(screen_coords[2].x, screen_coords[2].y, screen_coords[0].x, screen_coords[0].y, pixels, pinch, &col);*/
+		Vec3f n = (world_coords[2] - world_coords[0]) ^ (world_coords[1] - world_coords[0]);
+		n.normalize();
+		float intensity = n * light_dir;
+		if (intensity > 0) {
+			Color col;
+			col.alpha = 255;
+			col.red = 255 * intensity;
+			col.green = 0;
+			col.blue = 0;
+			triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
+		}
 	}
+	// old without light
+	//////printf("r=%d, g=%d, b=%d\n", col.red, col.green, col.blue);
+	//for (int i = first; i < last; i++) {
+	//	Vec2i screen_coords[3];
+	//	for (int j = 0; j < 3; j++) {
+	//		Vec3f world_coords = mb.vert(mb.face(i,j));
+	//		screen_coords[j] = Vec2i((world_coords.x + 1.)*width / 2., (world_coords.y + 1.)*height / 2.);
+	//	}
+	//	
+	//	triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
+	//	// Linew render
+	//	/*line(screen_coords[0].x, screen_coords[0].y, screen_coords[1].x, screen_coords[1].y, pixels, pinch, &col);
+	//	line(screen_coords[1].x, screen_coords[1].y, screen_coords[2].x, screen_coords[2].y, pixels, pinch, &col);
+	//	line(screen_coords[2].x, screen_coords[2].y, screen_coords[0].x, screen_coords[0].y, pixels, pinch, &col);*/
+	//}
+	////printf("r=%d, g=%d, b=%d\n", col.red, col.green, col.blue);
+
+	// new
+	//Color col;
+	//col.alpha = 255;
+	//col.red = 255;
+	//col.green = 0;
+	//col.blue = 0;
+	//Vec3f light_dir(0, 0, -1);//todo remove it
+	//const int depth = 255;//todo it too
+	//for (int i = first; i < last; i++) {
+	//	Vec3i screen_coords[3];
+	//	Vec3f world_coords[3];
+	//	for (int j = 0; j < 3; j++) {
+	//		Vec3f v = mb.vert(mb.face(i, j));
+	//		screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
+	//		world_coords[j] = v;
+	//	}
+	//	Vec3f n = (world_coords[2] - world_coords[0])^(world_coords[1] - world_coords[0]);
+	//	n.normalize();
+	//	float intensity = n * light_dir;
+	//	if (intensity > 0) {
+	//		triangleZBuf(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col, zbuffer);
+	//	}
+	//}
 }
 
-__device__ int* splitByThreads(int model, int parts)
+int* splitByThreads(int model, int parts)
 {
 	int array_size = parts + 1;
 	int* part_array = (int*)malloc(array_size*sizeof(int));
@@ -64,19 +118,16 @@ __device__ void debugPrint(int *arr, int size)
 	printf("\n");
 }
 
-__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb, int threads_size)
+__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb, int threads_size, int *arr, int *zbuffer)
 {
 	int idx = blockIdx.x*blockDim.x + threadIdx.x;
 	//printf("size=%d\n", threads_size);
 	
 	if (idx < threads_size + 1)
 	{
-		int* arr = splitByThreads(*(mb.nfaces), threads_size);
 		//debugPrint(arr, threads_size + 1);
 		//printf("idx=%d\n", idx);
-		printf(".");
-		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1]);
-		free(arr);
+		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer);
 	}
 
 }
@@ -92,21 +143,34 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 	cudaMalloc((void**)&gpuPixels, size);
 	cudaMemcpy(gpuPixels, pixels, size, cudaMemcpyHostToDevice);
 
+	int *zBufferGPU;
+	cudaMalloc((void**)&zBufferGPU, width*height * sizeof(int));
+	cudaMemcpy(zBufferGPU, zbuffer, width*height * sizeof(int), cudaMemcpyHostToDevice);
+
 	clock_t begin = clock();
 
 	//// parts is 7, res array size 8
 	//int* arr = splitByThreads(5022, 20);
 	//debugPrint(arr, 21);
+	printf(".");
+	int threads_size = 60;
+	int* arr = splitByThreads(m->nfaces(), threads_size);
 
-	draw <<<64, 2 >>> (gpuPixels, pinch, width, height, *model, 60);
+	int *cArr;
+	cudaMalloc((void**)&cArr, sizeof(int)*(threads_size+1));
+	cudaMemcpy(cArr, arr, sizeof(int)*(threads_size + 1), cudaMemcpyHostToDevice);
 
+	draw <<<64, 2 >>> (gpuPixels, pinch, width, height, *model, threads_size, cArr, zBufferGPU);
 	cudaDeviceSynchronize();
 
+	free(arr);
+	cudaFree(cArr);
+	cudaFree(zBufferGPU);
+	
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
 	//printf("time: %lf\n", elapsed_secs);
-
 
 	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);
 	cudaFree(gpuPixels);

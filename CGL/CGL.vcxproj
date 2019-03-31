@@ -59,6 +59,9 @@
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9D9407DE-C2B7-4578-ACB9-5EC5185459B9}</ProjectGuid>
     <RootNamespace>CGL</RootNamespace>

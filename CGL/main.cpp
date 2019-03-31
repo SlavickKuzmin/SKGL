@@ -34,8 +34,8 @@ void runGPURender()
 	//for(int i = 0; i < height; i++)
 	//		screen->setPixel(i, height-i, 0xFFFF0000);
 
-	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
-
+	//Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
+	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\african_head\\african_head.obj");
 	RenderOnGPU *render = new RenderOnGPU(model, width, height);
 
 	bool quit = false;

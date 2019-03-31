@@ -56,8 +56,9 @@ void printDeviceInfo()
 	}
 }
 
-__device__ __forceinline__ void setPixel(void* pixels, int pinch, int x, int y, Color color)
+__device__ __forceinline__ void setPixel(void* pixels, int pinch, int x, int y, Color *color)
 {
+	//printf("r=%d, g=%d, b=%d\n", (*color).red, (*color).green, (*color).blue);
 	Uint8 *pixel = (Uint8*)pixels;
 	pixel += ((800-y) * pinch) + (x * sizeof(Uint32));
 	*((Uint32*)pixel) = packColorToUint32(color);//abgr
@@ -77,6 +78,42 @@ __device__ void swapVec2i(Vec2i &x, Vec2i &y)
 	y = tmp;
 }
 
+__device__ void swapVec3i(Vec3i &x, Vec3i &y)
+{
+	Vec3i tmp = x;
+	x = y;
+	y = tmp;
+}
+
+#define widthScreen 800
+
+__device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pinch, Color *col, int *zbuffer) {
+	if (t0.y == t1.y && t0.y == t2.y) return; // i dont care about degenerate triangles
+	if (t0.y > t1.y) swapVec3i(t0, t1);
+	if (t0.y > t2.y) swapVec3i(t0, t2);
+	if (t1.y > t2.y) swapVec3i(t1, t2);
+	int total_height = t2.y - t0.y;
+	for (int i = 0; i < total_height; i++) {
+		bool second_half = i > t1.y - t0.y || t1.y == t0.y;
+		int segment_height = second_half ? t2.y - t1.y : t1.y - t0.y;
+		float alpha = (float)i / total_height;
+		float beta = (float)(i - (second_half ? t1.y - t0.y : 0)) / segment_height; // be careful: with above conditions no division by zero here
+		Vec3i A = t0 + Vec3i(t2 - t0)*alpha;
+		Vec3i B = second_half ? t1 + Vec3i(t2 - t1)*beta : t0 + Vec3i(t1 - t0)*beta;
+		if (A.x > B.x) swapVec3i(A, B);
+		for (int j = A.x; j <= B.x; j++) {
+			float phi = B.x == A.x ? 1. : (float)(j - A.x) / (float)(B.x - A.x);
+			Vec3i P = A + Vec3i(B - A)*phi;
+			int idx = P.x + P.y*widthScreen;
+			if (zbuffer[idx] < P.z) {
+				zbuffer[idx] = P.z;
+				//image.set(P.x, P.y, color);
+				setPixel(pixels, pinch, P.x, P.y, col);
+			}
+		}
+	}
+}
+
 __device__ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, void* pixels, int pinch, Color *col) {
 	if (t0.y == t1.y && t0.y == t2.y) return; // i dont care about degenerate triangles
 	// sort the vertices, t0, t1, t2 lower-to-upper (bubblesort yay!)
@@ -94,7 +131,7 @@ __device__ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, void* pixels, int pinch, 
 		if (A.x > B.x) swapVec2i(A, B);
 		for (int j = A.x; j <= B.x; j++) {
 			//image.set(j, t0.y + i, color); // attention, due to int casts t0.y+i != A.y
-			setPixel(pixels, pinch, j, t0.y + i, *col);
+			setPixel(pixels, pinch, j, t0.y + i, col);
 		}
 	}
 }
@@ -114,10 +151,10 @@ __device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch, Co
 		float t = (x - x0) / (float)(x1 - x0);
 		int y = y0 * (1. - t) + y1 * t;
 		if (steep) {
-			setPixel(pixels, pinch, y, x, *col); // if transposed, de-transpose
+			setPixel(pixels, pinch, y, x, col); // if transposed, de-transpose
 		}
 		else {
-			setPixel(pixels, pinch, x, y, *col);
+			setPixel(pixels, pinch, x, y, col);
 		}
 	}
 }

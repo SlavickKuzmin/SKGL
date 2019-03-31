@@ -5,9 +5,9 @@ __device__ Uint32 packRGBAToUint32(ColorByte r, ColorByte g, ColorByte b, ColorB
 	return (a << 24) | (b << 16) | (g << 8) | r;
 }
 
-__device__ Uint32 packColorToUint32(Color color)
+__device__ Uint32 packColorToUint32(Color *color)
 {
-	return (color.alpha << 24) | (color.blue << 16) | (color.green << 8) | color.red;
+	return ((*color).alpha << 24) | ((*color).blue << 16) | ((*color).green << 8) | (*color).red;
 }
 
 __device__ Color unpackUint32ToColor(Uint32 col)

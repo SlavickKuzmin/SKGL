@@ -13,6 +13,8 @@ public:
 	void refresh(void* pixels, int pinch, int width, int height);
 private:
 	ModelBuffer *model;
+	Model *m;
 	int width;
 	int height;
+	int *zbuffer;
 };
