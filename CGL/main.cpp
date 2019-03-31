@@ -36,6 +36,7 @@ void runGPURender()
 
 	//Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
 	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\african_head\\african_head.obj");
+	//Model *model = new Model("E:\\3d\\stature\\statue.obj");
 	RenderOnGPU *render = new RenderOnGPU(model, width, height);
 
 	bool quit = false;

@@ -19,7 +19,9 @@ private:
 template <typename T> struct vec<2, T> {
 	__device__ vec() : x(T()), y(T()) {}
 	__device__ vec(T X, T Y) : x(X), y(Y) {}
-	template <class U> __device__ vec<2, T>(const vec<2, U> &v);
+	//template <class U> __device__ vec<2, T>(const vec<2, U> &v);
+	template <class U> __device__ vec<2, T>(const vec<2, U> &v) : x(v.x), y(v.y) {}
+
 	__device__ T& operator[](const size_t i) { assert(i < 2); return i <= 0 ? x : y; }
 	__device__ const T& operator[](const size_t i) const { assert(i < 2); return i <= 0 ? x : y; }
 

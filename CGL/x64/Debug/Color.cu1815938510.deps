@@ -1,0 +1,331 @@
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include\cuda_runtime.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_config.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\crtdefs.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vcruntime.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\sal.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\concurrencysal.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vadefs.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\limits.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\stddef.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\library_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\channel_descriptor.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_device_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_functions.hpp
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/common_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\string.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_memory.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_memcpy_s.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\errno.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vcruntime_string.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_wstring.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\time.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_wtime.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\math_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_math.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\stdlib.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_malloc.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_search.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_wstdlib.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\cmath
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\yvals.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\yvals_core.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xkeycheck.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\crtdefs.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\crtdbg.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vcruntime_new_debug.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vcruntime_new.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\use_ansi.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\cstdlib
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xtgmath.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xtr1common
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\math_functions.hpp
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\channel_descriptor.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\channel_descriptor.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt/device_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\device_functions.hpp
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\device_double_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\device_double_functions.hpp
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_20_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_32_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_35_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_32_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_60_atomic_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_20_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_30_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_32_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_35_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_32_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\sm_61_intrinsics.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\sm_70_rt.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\builtin_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\driver_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\crt\host_defines.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_surface_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_fetch_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_texture_types.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\texture_indirect_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\surface_indirect_functions.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\cuda_runtime_api.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\device_launch_parameters.h
+c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\vector_types.h
+e:\diplom\sdl\cgl\Color.cuh
+E:\Diplom\SDL\SDL2-devel-2.0.9-VC\SDL2-2.0.9\include\SDL.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_main.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_stdinc.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_config.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_platform.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\shared\winapifamily.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\shared\winpackagefamily.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\stdarg.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_assert.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_atomic.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_audio.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_error.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_endian.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_mutex.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_thread.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\process.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_startup.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vcruntime_startup.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\corecrt_wprocess.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_rwops.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_clipboard.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_cpuinfo.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\intrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\intrin0.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\setjmp.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\immintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\wmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\nmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\smmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\tmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\pmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\emmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\mmintrin.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\malloc.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\zmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\ammintrin.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_events.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_video.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_pixels.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_rect.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_surface.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_blendmode.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_keyboard.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_keycode.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_scancode.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_mouse.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_joystick.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_gamecontroller.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_quit.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_gesture.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_touch.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_filesystem.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_haptic.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_hints.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_loadso.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_log.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_messagebox.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_power.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_render.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_sensor.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_shape.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_system.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_timer.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\SDL_version.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\begin_code.h
+e:\diplom\sdl\sdl2-devel-2.0.9-vc\sdl2-2.0.9\include\close_code.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include\cuda_runtime_api.h

@@ -28,6 +28,7 @@
 
 #include "Screen.h"
 #include "Color.cuh"
+#include "ModelBuffer.cuh"
 
 // GPU headers
 
@@ -35,6 +36,8 @@ __device__ void setPixel(void* pixels, int pinch, int x, int y, Color *color);
 __device__ void line(int x0, int y0, int x1, int y1, void* pixels, int pinch, Color *col);
 __device__ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, void* pixels, int pinch, Color *col);
 __device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pinch, Color *col, int *zbuffer);
+__device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, void* pixels, 
+	int pinch, float intensity, int *zbuffer, ModelBuffer &mb);
 
 __host__ void printDeviceInfo();
 __host__ void cudasafe(int error, char* message, char* file, int line);

@@ -87,6 +87,47 @@ __device__ void swapVec3i(Vec3i &x, Vec3i &y)
 
 #define widthScreen 800
 
+__device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2,
+	void* pixels, int pinch, float intensity, int *zbuffer, ModelBuffer &mb) {
+	//printf("x0=%d, y0=%d || x1=%d, y1=%d || x2=%d, y2=%d\n", uv0.x, uv0.y, uv1.x, uv1.y, uv2.x, uv2.y);
+
+	if (t0.y == t1.y && t0.y == t2.y) return; // i dont care about degenerate triangles
+	if (t0.y > t1.y) { swapVec3i(t0, t1); swapVec2i(uv0, uv1); }
+	if (t0.y > t2.y) { swapVec3i(t0, t2); swapVec2i(uv0, uv2); }
+	if (t1.y > t2.y) { swapVec3i(t1, t2); swapVec2i(uv1, uv2); }
+
+	int total_height = t2.y - t0.y;
+	for (int i = 0; i < total_height; i++) {
+		bool second_half = i > t1.y - t0.y || t1.y == t0.y;
+		int segment_height = second_half ? t2.y - t1.y : t1.y - t0.y;
+		float alpha = (float)i / total_height;
+		float beta = (float)(i - (second_half ? t1.y - t0.y : 0)) / segment_height; // be careful: with above conditions no division by zero here
+		Vec3i A = t0 + Vec3f(t2 - t0)*alpha;
+		Vec3i B = second_half ? t1 + Vec3f(t2 - t1)*beta : t0 + Vec3f(t1 - t0)*beta;
+		Vec2i uvA = uv0 + (uv2 - uv0)*alpha;
+		Vec2i uvB = second_half ? uv1 + (uv2 - uv1)*beta : uv0 + (uv1 - uv0)*beta;
+		if (A.x > B.x) { swapVec3i(A, B); swapVec2i(uvA, uvB); }
+		
+		for (int j = A.x; j <= B.x; j++) {
+			float phi = B.x == A.x ? 1. : (float)(j - A.x) / (float)(B.x - A.x);
+			Vec3i   P = Vec3f(A) + Vec3f(B - A)*phi;
+			Vec2i uvP = uvA + (uvB - uvA)*phi;
+			P.x = j; P.y = t0.y + i;//hack
+			int idx = P.x + P.y*widthScreen;
+			if (zbuffer[idx] < P.z) {
+				zbuffer[idx] = P.z;
+				Color color = mb.diffuse(uvP);
+				color.alpha = 255;
+				color.red = color.red * intensity;
+				color.green = color.green * intensity;
+				color.blue = color.blue * intensity;
+				
+				setPixel(pixels, pinch, P.x, P.y, &color);
+			}
+		}
+	}
+}
+
 __device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pinch, Color *col, int *zbuffer) {
 	if (t0.y == t1.y && t0.y == t2.y) return; // i dont care about degenerate triangles
 	if (t0.y > t1.y) swapVec3i(t0, t1);
@@ -108,7 +149,6 @@ __device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pin
 			int idx = P.x + P.y*widthScreen;
 			if (zbuffer[idx] < P.z) {
 				zbuffer[idx] = P.z;
-				//image.set(P.x, P.y, color);
 				setPixel(pixels, pinch, P.x, P.y, col);
 			}
 		}

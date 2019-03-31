@@ -4,6 +4,7 @@
 #include "cuda_geometry.cuh"
 #include "cuda_runtime_api.h"
 #include "model.h"
+#include "Color.cuh"
 
 class ModelBuffer {
 public:
@@ -22,8 +23,14 @@ public:
 	__device__ Vec3f normal(int iface, int nthvert);
 	__device__ Vec3f vert(int i);
 	__device__ Vec3f vert(int iface, int nthvert);
-	__device__ Vec2f uv(int iface, int nthvert);
+	__device__ Vec2i uv(int iface, int nthvert);
 	__device__ int face(int i, int idx);
+	__device__ Color diffuse(Vec2i uvf);
+	//diff text
+	unsigned char *diffuse_data;
+	int *diffuse_width;
+	int *diffuse_height;
+	int *diffuse_bytespp;
 };
 
 #endif

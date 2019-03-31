@@ -19,10 +19,10 @@
     <CudaCompile Include="Helpers.cuh">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="ModelBuffer.cu">
+    <CudaCompile Include="RenderOnGPU.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="RenderOnGPU.cu">
+    <CudaCompile Include="ModelBuffer.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
   </ItemGroup>
