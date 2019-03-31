@@ -31,14 +31,23 @@ template <typename T> struct vec<2, T> {
 template <typename T> struct vec<3, T> {
 	__device__ vec() : x(T()), y(T()), z(T()) {}
 	__device__ vec(T X, T Y, T Z) : x(X), y(Y), z(Z) {}
-	template <class U> __device__ vec<3, T>(const vec<3, U> &v);
+	//template <class U> __device__ vec<3, T>(const vec<3, U> &v);
+
+	template <class U> __device__ vec<3, T>(const vec<3, U> &v) : x(v.x), y(v.y), z(v.z) {}
+
 	__device__ T& operator[](const size_t i) { assert(i < 3); return i <= 0 ? x : (1 == i ? y : z); }
 	__device__ const T& operator[](const size_t i) const { assert(i < 3); return i <= 0 ? x : (1 == i ? y : z); }
 	__device__ float norm() { return std::sqrt(x*x + y * y + z * z); }
 	__device__ vec<3, T> & normalize(T l = 1) { *this = (*this)*(l / norm()); return *this; }
 	__device__ vec<3, T> operator ^(const vec<3, T> &v) const { return vec<3, T>(y*v.z - z * v.y, z*v.x - x * v.z, x*v.y - y * v.x); }
+	__device__ vec<3, T> operator +(const vec<3, T> &v) const { return vec<3, T>(x + v.x, y + v.y, z + v.z); }
 	T x, y, z;
 };
+
+//template <> template <> __device__ vec<3, int>   ::vec(const vec<3, float> &v) : x(int(v.x + .5f)), y(int(v.y + .5f)), z(int(v.z + .5f)) {}
+//template <> template <> __device__ vec<3, float> ::vec(const vec<3, int> &v) : x(v.x), y(v.y), z(v.z) {}
+//template <> template <> __device__ vec<2, int>   ::vec(const vec<2, float> &v) : x(int(v.x + .5f)), y(int(v.y + .5f)) {}
+//template <> template <> __device__ vec<2, float> ::vec(const vec<2, int> &v) : x(v.x), y(v.y) {}
 
 /////////////////////////////////////////////////////////////////////////////////
 

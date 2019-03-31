@@ -19,6 +19,16 @@ RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 RenderOnGPU::~RenderOnGPU()
 {
 	delete model;
+	//{ // dump z-buffer (debugging purposes only)
+	//	TGAImage zbimage(width, height, TGAImage::GRAYSCALE);
+	//	for (int i = 0; i < width; i++) {
+	//		for (int j = 0; j < height; j++) {
+	//			zbimage.set(i, j, TGAColor(zbuffer[i + j * width], 1, 1));
+	//		}
+	//	}
+	//	zbimage.flip_vertically(); // i want to have the origin at the left bottom corner of the image
+	//	zbimage.write_tga_file("D:\\zbuffer.tga");
+	//}
 	delete[] zbuffer;
 }
 
@@ -26,29 +36,30 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 {
 	//printf("f=%d, l=%d\n", first, last);
 	
-	// old
-	Vec3f light_dir(0, 0, -1);//todo remove it
-	const int depth = 255;//todo it too
-	for (int i = first; i < last; i++) {
-		Vec2i screen_coords[3];
-		Vec3f world_coords[3];
-		for (int j = 0; j < 3; j++) {
-			Vec3f v = mb.vert(mb.face(i, j));
-			screen_coords[j] = Vec2i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2.);
-			world_coords[j] = v;
-		}
-		Vec3f n = (world_coords[2] - world_coords[0]) ^ (world_coords[1] - world_coords[0]);
-		n.normalize();
-		float intensity = n * light_dir;
-		if (intensity > 0) {
-			Color col;
-			col.alpha = 255;
-			col.red = 255 * intensity;
-			col.green = 0;
-			col.blue = 0;
-			triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
-		}
-	}
+	//// old
+	//Vec3f light_dir(0, 0, -1);//todo remove it
+	//const int depth = 255;//todo it too
+	//for (int i = first; i < last; i++) {
+	//	Vec2i screen_coords[3];
+	//	Vec3f world_coords[3];
+	//	for (int j = 0; j < 3; j++) {
+	//		Vec3f v = mb.vert(mb.face(i, j));
+	//		screen_coords[j] = Vec2i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2.);
+	//		world_coords[j] = v;
+	//	}
+	//	Vec3f n = (world_coords[2] - world_coords[0]) ^ (world_coords[1] - world_coords[0]);
+	//	n.normalize();
+	//	float intensity = n * light_dir;
+	//	if (intensity > 0) {
+	//		Color col;
+	//		col.alpha = 255;
+	//		col.red = 255 * intensity;
+	//		col.green = 0;
+	//		col.blue = 0;
+	//		triangle(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col);
+	//	}
+	//}
+
 	// old without light
 	//////printf("r=%d, g=%d, b=%d\n", col.red, col.green, col.blue);
 	//for (int i = first; i < last; i++) {
@@ -67,28 +78,28 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 	////printf("r=%d, g=%d, b=%d\n", col.red, col.green, col.blue);
 
 	// new
-	//Color col;
-	//col.alpha = 255;
-	//col.red = 255;
-	//col.green = 0;
-	//col.blue = 0;
-	//Vec3f light_dir(0, 0, -1);//todo remove it
-	//const int depth = 255;//todo it too
-	//for (int i = first; i < last; i++) {
-	//	Vec3i screen_coords[3];
-	//	Vec3f world_coords[3];
-	//	for (int j = 0; j < 3; j++) {
-	//		Vec3f v = mb.vert(mb.face(i, j));
-	//		screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
-	//		world_coords[j] = v;
-	//	}
-	//	Vec3f n = (world_coords[2] - world_coords[0])^(world_coords[1] - world_coords[0]);
-	//	n.normalize();
-	//	float intensity = n * light_dir;
-	//	if (intensity > 0) {
-	//		triangleZBuf(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col, zbuffer);
-	//	}
-	//}
+	Vec3f light_dir(0, 0, -1);//todo remove it
+	const int depth = 255;//todo it too
+	for (int i = first; i < last; i++) {
+		Vec3i screen_coords[3];
+		Vec3f world_coords[3];
+		for (int j = 0; j < 3; j++) {
+			Vec3f v = mb.vert(mb.face(i, j));
+			screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
+			world_coords[j] = v;
+		}
+		Vec3f n = (world_coords[2] - world_coords[0])^(world_coords[1] - world_coords[0]);
+		n.normalize();
+		float intensity = n * light_dir;
+		if (intensity > 0) {
+			Color col;
+			col.alpha = 255;
+			col.red = 255*intensity;
+			col.green = 255 * intensity;
+			col.blue = 255 * intensity;
+			triangleZBuf(screen_coords[0], screen_coords[1], screen_coords[2], pixels, pinch, &col, zbuffer);
+		}
+	}
 }
 
 int* splitByThreads(int model, int parts)
