@@ -123,7 +123,18 @@
     </Link>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
+      <GenerateLineInfo>true</GenerateLineInfo>
+      <MaxRegCount>200</MaxRegCount>
+      <FastMath>true</FastMath>
+      <Optimization>Od</Optimization>
     </CudaCompile>
+    <CudaLink>
+      <GPUDebugInfo>true</GPUDebugInfo>
+    </CudaLink>
+    <CudaLink>
+      <Optimization>Od</Optimization>
+    </CudaLink>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Optimized|x64'">
     <ClCompile>

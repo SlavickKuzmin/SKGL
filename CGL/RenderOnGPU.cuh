@@ -5,6 +5,8 @@
 #include "Helpers.cuh"
 #include <time.h>
 
+int* splitByThreads(int model, int parts);
+
 class RenderOnGPU
 {
 public:
@@ -13,6 +15,9 @@ public:
 	void refresh(void* pixels, int pinch, int width, int height);
 private:
 	ModelBuffer *model;
+	int *zBufferGPU;
+	int *cArr;
+	int threads_size;
 	Model *m;
 	int width;
 	int height;

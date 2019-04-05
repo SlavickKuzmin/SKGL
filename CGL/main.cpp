@@ -7,6 +7,8 @@
 
 #include "Screen.h"
 
+#include <Windows.h>
+
 const int width = 800;
 const int height = 800;
 void runRender();
@@ -34,8 +36,8 @@ void runGPURender()
 	//for(int i = 0; i < height; i++)
 	//		screen->setPixel(i, height-i, 0xFFFF0000);
 
-	//Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
-	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\african_head\\african_head.obj");
+	Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\diablo3_pose\\diablo3_pose.obj");
+	//Model *model = new Model("E:\\Diplom\\SDL\\CGL\\obj\\african_head\\african_head.obj");
 	//Model *model = new Model("E:\\3d\\stature\\statue.obj");
 	RenderOnGPU *render = new RenderOnGPU(model, width, height);
 

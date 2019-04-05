@@ -14,6 +14,17 @@ RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 	for (int i = 0; i < width*height; i++) {
 		zbuffer[i] = std::numeric_limits<int>::min();
 	}
+
+	//int *zBufferGPU;
+	cudaMalloc((void**)&zBufferGPU, width*height * sizeof(int));
+	
+	threads_size = 5000;
+	int* arr = splitByThreads(m->nfaces(), threads_size);
+
+	//int *cArr;
+	cudaMalloc((void**)&cArr, sizeof(int)*(threads_size + 1));
+	cudaMemcpy(cArr, arr, sizeof(int)*(threads_size + 1), cudaMemcpyHostToDevice);
+	free(arr);
 }
 
 RenderOnGPU::~RenderOnGPU()
@@ -30,13 +41,16 @@ RenderOnGPU::~RenderOnGPU()
 	//	zbimage.write_tga_file("D:\\zbuffer.tga");
 	//}
 	delete[] zbuffer;
+	cudaFree(zBufferGPU);
+	cudaFree(cArr);
 }
 
-__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last, int *zbuffer)
+__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last, int *zbuffer, int ra)
 {
-	printf("T");
+	//printf("T");
 	// new with textures
-	Vec3f light_dir(0, 0, -1);//todo remove it
+	//printf("ra=%d\n", ra);
+	Vec3f light_dir(0, 0, -0.1*ra);//todo remove it
 	const int depth = 255;//todo it too
 	for (int i = first; i < last; i++) {
 		Vec3i screen_coords[3];
@@ -50,6 +64,7 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 		n.normalize();
 		float intensity = n * light_dir;
 		if (intensity > 0) {
+			//intensity *= ra;
 			Vec2i uv[3];
 			for (int k = 0; k < 3; k++) {
 				uv[k] = mb.uv(i, k);
@@ -89,7 +104,7 @@ __device__ void debugPrint(int *arr, int size)
 	printf("\n");
 }
 
-__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb, int threads_size, int *arr, int *zbuffer)
+__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb, int threads_size, int *arr, int *zbuffer, int ra)
 {
 	int idx = blockIdx.x*blockDim.x + threadIdx.x;
 	//printf("size=%d\n", threads_size);
@@ -98,24 +113,28 @@ __global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer
 	{
 		//debugPrint(arr, threads_size + 1);
 		//printf("idx=%d\n", idx);
-		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer);
+		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer, ra);
 	}
 
 }
 
 
-#define M 2
+#define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
+inline void gpuAssert(cudaError_t code, const char *file, int line)
+{
+	if (code != cudaSuccess)
+	{
+		fprintf(stderr, "GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
+	}
+}
 
 void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 {
 	void *gpuPixels;
-
 	int size = height * pinch;
 	cudaMalloc((void**)&gpuPixels, size);
 	cudaMemcpy(gpuPixels, pixels, size, cudaMemcpyHostToDevice);
 
-	int *zBufferGPU;
-	cudaMalloc((void**)&zBufferGPU, width*height * sizeof(int));
 	cudaMemcpy(zBufferGPU, zbuffer, width*height * sizeof(int), cudaMemcpyHostToDevice);
 
 	clock_t begin = clock();
@@ -124,24 +143,17 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 	//int* arr = splitByThreads(5022, 20);
 	//debugPrint(arr, 21);
 	//printf(".");
-	int threads_size = 160;
-	int* arr = splitByThreads(m->nfaces(), threads_size);
 
-	int *cArr;
-	cudaMalloc((void**)&cArr, sizeof(int)*(threads_size+1));
-	cudaMemcpy(cArr, arr, sizeof(int)*(threads_size + 1), cudaMemcpyHostToDevice);
-
-	draw <<<64, 4 >>> (gpuPixels, pinch, width, height, *model, threads_size, cArr, zBufferGPU);
-	cudaDeviceSynchronize();
-
-	free(arr);
-	cudaFree(cArr);
-	cudaFree(zBufferGPU);
+	srand(time(0));
+	int ra = (rand() % 20)+5;
+	draw <<<128, 64 >>> (gpuPixels, pinch, width, height, *model, threads_size, cArr, zBufferGPU, ra);
+	gpuErrchk(cudaPeekAtLastError());
+	gpuErrchk(cudaDeviceSynchronize());
 	
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	//printf("time: %lf\n", elapsed_secs);
+	printf("time: %lf\n", elapsed_secs);
 
 	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);
 	cudaFree(gpuPixels);

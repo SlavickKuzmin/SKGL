@@ -74,19 +74,19 @@ __device__ int* ModelBuffer::getNFacesElem()
 
 ModelBuffer::~ModelBuffer()
 {
-	cudaFree(verts_);
-	cudaFree(norms_);
-	cudaFree(uv_);
-	cudaFree(faces_);
-	cudaFree(nverts);
-	cudaFree(nfaces);
-	cudaFree(nfacesElem);
-	
-	//free textute
-	cudaFree(diffuse_data);
-	cudaFree(diffuse_width);
-	cudaFree(diffuse_height);
-	cudaFree(diffuse_bytespp);
+	//cudaFree(verts_);
+	//cudaFree(norms_);
+	//cudaFree(uv_);
+	//cudaFree(faces_);
+	//cudaFree(nverts);
+	//cudaFree(nfaces);
+	//cudaFree(nfacesElem);
+	//
+	////free textute
+	//cudaFree(diffuse_data);
+	//cudaFree(diffuse_width);
+	//cudaFree(diffuse_height);
+	//cudaFree(diffuse_bytespp);
 }
 
 __device__ Color ModelBuffer::diffuse(Vec2i uv)
