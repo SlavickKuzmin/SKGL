@@ -48,19 +48,53 @@ RenderOnGPU::~RenderOnGPU()
 	cudaFree(cArr);
 }
 
+
+__device__ Vec3f m2v(Matrix m) {
+	return Vec3f(m[0][0] / m[3][0], m[1][0] / m[3][0], m[2][0] / m[3][0]);
+}
+
+__device__ Matrix v2m(Vec3f v) {
+	Matrix m;
+	m[0][0] = v.x;
+	m[1][0] = v.y;
+	m[2][0] = v.z;
+	m[3][0] = 1.f;
+	return m;
+}
+
+__device__ Matrix viewport(int x, int y, int w, int h) {
+	Matrix m = Matrix::identity();
+	m[0][3] = x + w / 2.f;
+	m[1][3] = y + h / 2.f;
+	m[2][3] = 255 / 2.f; //depth=255
+
+	m[0][0] = w / 2.f;
+	m[1][1] = h / 2.f;
+	m[2][2] = 255 / 2.f;//depth=255
+	return m;
+}
+
+
 __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int first, int last, int *zbuffer, int ra)
 {
 	//printf("T");
 	// new with textures
 	//printf("ra=%d\n", ra);
 	Vec3f light_dir(0, 0, -0.1*ra);//todo remove it
+	Vec3f camera(0, 0, 3);
+	Matrix Projection = Matrix::identity();
+	Matrix ViewPort = viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
+	Projection[3][2] = -1.f / camera.z;
+
 	const int depth = 255;//todo it too
 	for (int i = first; i < last; i++) {
 		Vec3i screen_coords[3];
 		Vec3f world_coords[3];
 		for (int j = 0; j < 3; j++) {
 			Vec3f v = mb->vert(mb->face(i, j));
-			screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
+			/*screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
+			world_coords[j] = v;*/
+			screen_coords[j] = m2v(ViewPort*Projection*v2m(v));
 			world_coords[j] = v;
 		}
 		Vec3f n = (world_coords[2] - world_coords[0]) ^ (world_coords[1] - world_coords[0]);
