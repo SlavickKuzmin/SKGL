@@ -5,6 +5,7 @@
 #include "cuda_runtime_api.h"
 #include "model.h"
 #include "Color.cuh"
+#include "TextureBuffer.cuh"
 
 class ModelBuffer {
 public:
@@ -26,11 +27,8 @@ public:
 	__device__ Vec2i uv(int iface, int nthvert);
 	__device__ int face(int i, int idx);
 	__device__ Color diffuse(Vec2i uvf);
-	//diff text
-	unsigned char *diffuse_data;
-	int *diffuse_width;
-	int *diffuse_height;
-	int *diffuse_bytespp;
+	// diffuse texture
+	TextureBuffer *diffuse_texture;
 };
 
 #endif

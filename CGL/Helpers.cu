@@ -88,7 +88,7 @@ __device__ void swapVec3i(Vec3i &x, Vec3i &y)
 #define widthScreen 800
 
 __device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2,
-	void* pixels, int pinch, float intensity, int *zbuffer, ModelBuffer &mb) {
+	void* pixels, int pinch, float intensity, int *zbuffer, ModelBuffer *mb) {
 	//printf("x0=%d, y0=%d || x1=%d, y1=%d || x2=%d, y2=%d\n", uv0.x, uv0.y, uv1.x, uv1.y, uv2.x, uv2.y);
 
 	if (t0.y == t1.y && t0.y == t2.y) return; // i dont care about degenerate triangles
@@ -116,7 +116,7 @@ __device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv
 			int idx = P.x + P.y*widthScreen;
 			if (zbuffer[idx] < P.z) {
 				zbuffer[idx] = P.z;
-				Color color = mb.diffuse(uvP);
+				Color color = mb->diffuse(uvP);
 				color.alpha = 255;
 				color.red = color.red * intensity;
 				color.green = color.green * intensity;

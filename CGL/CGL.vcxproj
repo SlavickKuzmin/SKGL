@@ -29,6 +29,7 @@
     <CudaCompile Include="RenderOnGPU.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
+    <CudaCompile Include="TextureBuffer.cu" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Color.cuh">
@@ -52,6 +53,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="TextureBuffer.cuh" />
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +126,7 @@
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
-      <GenerateLineInfo>true</GenerateLineInfo>
+      <GenerateLineInfo>false</GenerateLineInfo>
       <MaxRegCount>200</MaxRegCount>
       <FastMath>true</FastMath>
       <Optimization>Od</Optimization>

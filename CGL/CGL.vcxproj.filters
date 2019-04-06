@@ -25,6 +25,9 @@
     <CudaCompile Include="ModelBuffer.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
+    <CudaCompile Include="TextureBuffer.cu">
+      <Filter>GPU</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -52,6 +55,9 @@
       <Filter>GPU</Filter>
     </ClInclude>
     <ClInclude Include="RenderOnGPU.cuh">
+      <Filter>GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureBuffer.cuh">
       <Filter>GPU</Filter>
     </ClInclude>
   </ItemGroup>

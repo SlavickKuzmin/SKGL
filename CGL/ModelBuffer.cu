@@ -44,19 +44,13 @@ ModelBuffer::ModelBuffer(Model *model)
 	cudaMemcpy(faces_, flatten, size * sizeof(Vec3i), cudaMemcpyHostToDevice);
 	free(flatten);
 
-	//init textures
-	cudaMalloc((void**)&diffuse_width, sizeof(int));
-	cudaMalloc((void**)&diffuse_height, sizeof(int));
-	cudaMalloc((void**)&diffuse_bytespp, sizeof(int));
+	//init diffuse texture
+	// TODO possible leak
+	TextureBuffer *diffText = new TextureBuffer(model->diffusemap_);
+	cudaMalloc((void**)&(this->diffuse_texture), sizeof(TextureBuffer));
+	cudaMemcpy(this->diffuse_texture, diffText, sizeof(TextureBuffer), cudaMemcpyHostToDevice);
 
-	cudaMemcpy(diffuse_width, &(model->diffusemap_.width), sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(diffuse_height, &(model->diffusemap_.height), sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(diffuse_bytespp, &(model->diffusemap_.bytespp), sizeof(int), cudaMemcpyHostToDevice);
-
-	unsigned long nbytes = model->diffusemap_.width * model->diffusemap_.height*model->diffusemap_.bytespp;
-	cudaMalloc((void**)&diffuse_data, nbytes);
-
-	cudaMemcpy(diffuse_data, model->diffusemap_.data, nbytes, cudaMemcpyHostToDevice);
+	printf("Constr call\n");
 }
 
 __device__ int* ModelBuffer::getNVerts()
@@ -74,33 +68,27 @@ __device__ int* ModelBuffer::getNFacesElem()
 
 ModelBuffer::~ModelBuffer()
 {
-	//cudaFree(verts_);
-	//cudaFree(norms_);
-	//cudaFree(uv_);
-	//cudaFree(faces_);
-	//cudaFree(nverts);
-	//cudaFree(nfaces);
-	//cudaFree(nfacesElem);
-	//
-	////free textute
-	//cudaFree(diffuse_data);
-	//cudaFree(diffuse_width);
-	//cudaFree(diffuse_height);
-	//cudaFree(diffuse_bytespp);
+	cudaFree(verts_);
+	cudaFree(norms_);
+	cudaFree(uv_);
+	cudaFree(faces_);
+	cudaFree(nverts);
+	cudaFree(nfaces);
+	cudaFree(nfacesElem);
+	
+	// free texture
+	cudaFree(this->diffuse_texture);
+	printf("Destr call\n");
 }
 
 __device__ Color ModelBuffer::diffuse(Vec2i uv)
 {
-	//int x = uvf.x;
-	//int y = uvf.y;
-	//printf("x=%d, y=%d\n", uv.x, uv.y);
-	if (uv.x < 0 || uv.y < 0 || uv.x >= *diffuse_width || uv.y >= *diffuse_height) {
-	//	printf("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+	if (uv.x < 0 || uv.y < 0 || uv.x >= diffuse_texture->getWidth() || uv.y >= diffuse_texture->getHeight()) {
 		return Color();
 	}
-	Color c(diffuse_data + (uv.x + uv.y * (*diffuse_width))*(*diffuse_bytespp), *diffuse_bytespp);
+	Color c(diffuse_texture->texture_binary_data + (uv.x + uv.y * (diffuse_texture->getWidth()))*(diffuse_texture->getBytesApp()),
+		diffuse_texture->getBytesApp());
 	c.alpha = 255;
-	//printf("r=%d, g=%d, b=%d, a=%d\n", c.red, c.green, c.blue, c.alpha);
 	return c;
 }
 
@@ -123,14 +111,8 @@ __device__ Vec3f ModelBuffer::vert(int iface, int nthvert)
 
 __device__ Vec2i ModelBuffer::uv(int iface, int nthvert)
 {
-	//return uv_[faces_[iface][nthvert][1]];
-	//int idx = (faces_[*nfacesElem * iface + nthvert])[0];
-	//return uv_[idx];
-
-	//int idx = faces_[iface][nthvert][1];
 	int idx = (faces_[*nfacesElem * iface + nthvert])[1];
-	//printf("x=%f, y=%f  w=d%d, h=%d\n", uv_[idx].x*(*diffuse_width), uv_[idx].y*(*diffuse_height), (*diffuse_width), (*diffuse_height));
-	return Vec2i(uv_[idx].x*(*diffuse_width), uv_[idx].y*(*diffuse_height));
+	return Vec2i(uv_[idx].x*(diffuse_texture->getWidth()), uv_[idx].y*(diffuse_texture->getHeight()));
 }
 
 __device__ int ModelBuffer::face(int i, int idx) {

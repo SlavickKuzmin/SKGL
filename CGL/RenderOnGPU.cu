@@ -7,7 +7,10 @@ RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 
 	ModelBuffer *mb = new ModelBuffer(model);
 	// make model
-	this->model = mb;
+	// TODO possible leak
+	cudaMalloc((void**)&(this->model), sizeof(ModelBuffer));
+	cudaMemcpy(this->model, mb, sizeof(ModelBuffer), cudaMemcpyHostToDevice);
+	//this->model = mb;
 	this->m = model;
 
 	zbuffer = new int[width*height];
@@ -45,7 +48,7 @@ RenderOnGPU::~RenderOnGPU()
 	cudaFree(cArr);
 }
 
-__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer &mb, int first, int last, int *zbuffer, int ra)
+__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int first, int last, int *zbuffer, int ra)
 {
 	//printf("T");
 	// new with textures
@@ -56,7 +59,7 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 		Vec3i screen_coords[3];
 		Vec3f world_coords[3];
 		for (int j = 0; j < 3; j++) {
-			Vec3f v = mb.vert(mb.face(i, j));
+			Vec3f v = mb->vert(mb->face(i, j));
 			screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
 			world_coords[j] = v;
 		}
@@ -67,7 +70,7 @@ __device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer
 			//intensity *= ra;
 			Vec2i uv[3];
 			for (int k = 0; k < 3; k++) {
-				uv[k] = mb.uv(i, k);
+				uv[k] = mb->uv(i, k);
 				//printf("x=%d, y=%d\n", uv[k].x, uv[k].y);
 			}
 			//printf("h=%d, w=%d, ba=%d\n", mb.diffusemap_.get_height(), mb.diffusemap_.get_width(), mb.diffusemap_.get_bytespp());
@@ -104,7 +107,7 @@ __device__ void debugPrint(int *arr, int size)
 	printf("\n");
 }
 
-__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer mb, int threads_size, int *arr, int *zbuffer, int ra)
+__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int threads_size, int *arr, int *zbuffer, int ra)
 {
 	int idx = blockIdx.x*blockDim.x + threadIdx.x;
 	//printf("size=%d\n", threads_size);
@@ -146,7 +149,7 @@ void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
 
 	srand(time(0));
 	int ra = (rand() % 20)+5;
-	draw <<<128, 64 >>> (gpuPixels, pinch, width, height, *model, threads_size, cArr, zBufferGPU, ra);
+	draw <<<128, 64 >>> (gpuPixels, pinch, width, height, model, threads_size, cArr, zBufferGPU, ra);
 	gpuErrchk(cudaPeekAtLastError());
 	gpuErrchk(cudaDeviceSynchronize());
 	
