@@ -22,13 +22,16 @@ public:
 	__device__ int* getNFaces();
 	__device__ int* getNFacesElem();
 	__device__ Vec3f normal(int iface, int nthvert);
+	__device__ Vec3f normal(Vec2f uv);
 	__device__ Vec3f vert(int i);
 	__device__ Vec3f vert(int iface, int nthvert);
-	__device__ Vec2i uv(int iface, int nthvert);
+	//__device__ Vec2i uv(int iface, int nthvert);//obsolete REMOVE IT
+	__device__ Vec2f uv(int iface, int nthvert);
 	__device__ int face(int i, int idx);
-	__device__ Color diffuse(Vec2i uvf);
+	__device__ Color diffuse(Vec2f uvf);
 	// diffuse texture
 	TextureBuffer *diffuse_texture;
+	TextureBuffer *normal_map_texture;
 };
 
 #endif

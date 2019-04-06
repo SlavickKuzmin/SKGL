@@ -19,3 +19,14 @@ __device__ Color unpackUint32ToColor(Uint32 col)
 	color.alpha = (*((Uint32*)col) >> 24) & 0xFF;
 	return color;
 }
+
+__device__ Color Color::operator*(float intensity) const {
+	Color res = *this;
+	intensity = (intensity > 1.f ? 1.f : (intensity < 0.f ? 0.f : intensity));
+	//for (int i = 0; i < 4; i++) res.bgra[i] = bgra[i] * intensity;
+	res.red = res.red * intensity;
+	res.green = res.green * intensity;
+	res.blue = res.blue * intensity;
+	//res.alpha = res.alpha * intensity;
+	return res;
+}

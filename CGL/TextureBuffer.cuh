@@ -2,6 +2,7 @@
 #define _TEXTURE_BUFFER_CUH_
 
 #include "tgaimage.h"
+#include "Color.cuh"
 #include "cuda_runtime_api.h"
 
 class TextureBuffer
@@ -16,6 +17,7 @@ public:
 	__device__ int getWidth();
 	__device__ int getHeight();
 	__device__ int getBytesApp();
+	__device__ Color get(int x, int y);
 };
 
 #endif // !_TEXTURE_BUFFER_CUH_

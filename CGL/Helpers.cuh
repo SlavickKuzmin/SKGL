@@ -7,8 +7,8 @@
  * make all manipulations
  * copy renderer from GPU to CPU and display.
  */
-#ifndef RefreshOnGPU_CUH_
-#define RefreshOnGPU_CUH_
+#ifndef _HELPERS_CUH_
+#define _HELPERS_CUH_
 
 #ifdef __CUDACC__
 #define CUDA_CALLABLE_MEMBER __host__ __device__
@@ -29,6 +29,7 @@
 #include "Screen.h"
 #include "Color.cuh"
 #include "ModelBuffer.cuh"
+#include "Rasteriser.cuh"
 
 // GPU headers
 
@@ -39,7 +40,9 @@ __device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pin
 __device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, void* pixels, 
 	int pinch, float intensity, int *zbuffer, ModelBuffer *mb);
 
+__device__ void triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport, int ra);
+
 __host__ void printDeviceInfo();
 __host__ void cudasafe(int error, char* message, char* file, int line);
 
-#endif // !RefreshOnGPU_CUH_
+#endif // _HELPERS_CUH_

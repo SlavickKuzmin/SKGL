@@ -28,6 +28,12 @@
     <CudaCompile Include="TextureBuffer.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
+    <CudaCompile Include="Rasteriser.cu">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Rasteriser.cuh">
+      <Filter>GPU</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

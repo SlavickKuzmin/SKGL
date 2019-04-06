@@ -50,6 +50,11 @@ ModelBuffer::ModelBuffer(Model *model)
 	cudaMalloc((void**)&(this->diffuse_texture), sizeof(TextureBuffer));
 	cudaMemcpy(this->diffuse_texture, diffText, sizeof(TextureBuffer), cudaMemcpyHostToDevice);
 
+	// init nomal map texture
+	TextureBuffer *normTex = new TextureBuffer(model->normalmap_);
+	cudaMalloc((void**)&(this->normal_map_texture), sizeof(TextureBuffer));
+	cudaMemcpy(this->normal_map_texture, normTex, sizeof(TextureBuffer), cudaMemcpyHostToDevice);
+
 	printf("Constr call\n");
 }
 
@@ -78,24 +83,36 @@ ModelBuffer::~ModelBuffer()
 	
 	// free texture
 	cudaFree(this->diffuse_texture);
+	cudaFree(this->normal_map_texture);
 	printf("Destr call\n");
 }
 
-__device__ Color ModelBuffer::diffuse(Vec2i uv)
+__device__ Color ModelBuffer::diffuse(Vec2f uvf)
 {
-	if (uv.x < 0 || uv.y < 0 || uv.x >= diffuse_texture->getWidth() || uv.y >= diffuse_texture->getHeight()) {
-		return Color();
-	}
-	Color c(diffuse_texture->texture_binary_data + (uv.x + uv.y * (diffuse_texture->getWidth()))*(diffuse_texture->getBytesApp()),
-		diffuse_texture->getBytesApp());
-	c.alpha = 255;
-	return c;
+	//if (uv.x < 0 || uv.y < 0 || uv.x >= diffuse_texture->getWidth() || uv.y >= diffuse_texture->getHeight()) {
+	//	return Color();
+	//}
+	//Color c(diffuse_texture->texture_binary_data + (uv.x + uv.y*diffuse_texture->getWidth()*(diffuse_texture->getBytesApp()),
+	//	diffuse_texture->getBytesApp());
+	//c.alpha = 255;
+	//return c;
+	Vec2i uv(uvf[0] * diffuse_texture->getWidth(), uvf[1] * diffuse_texture->getHeight());
+	return diffuse_texture->get(uv[0], uv[1]);
 }
 
 __device__ Vec3f ModelBuffer::normal(int iface, int nthvert)
 {
 	int inx0 = (faces_[*nfacesElem * iface + nthvert])[2];
 	return norms_[inx0].normalize();
+}
+__device__ Vec3f ModelBuffer::normal(Vec2f uvf)
+{
+	Vec2i uv(uvf[0] * this->normal_map_texture->getWidth(), uvf[1] * this->normal_map_texture->getHeight());
+	Color c = this->normal_map_texture->get(uv[0], uv[1]);
+	Vec3f res;
+	for (int i = 0; i < 3; i++)
+		res[2 - i] = (float)c[i] / 255.f*2.f - 1.f;
+	return res;
 }
 
 __device__ Vec3f ModelBuffer::vert(int i)
@@ -109,11 +126,20 @@ __device__ Vec3f ModelBuffer::vert(int iface, int nthvert)
 	return verts_[idx];
 }
 
-__device__ Vec2i ModelBuffer::uv(int iface, int nthvert)
+//__device__ Vec2i ModelBuffer::uv(int iface, int nthvert)
+//{
+//	int idx = (faces_[*nfacesElem * iface + nthvert])[1];
+//	return Vec2i(uv_[idx].x*(diffuse_texture->getWidth()), uv_[idx].y*(diffuse_texture->getHeight()));
+//}
+
+__device__ Vec2f ModelBuffer::uv(int iface, int nthvert)
 {
+	//int idx = (faces_[*nfacesElem * iface + nthvert])[1];
+	//return Vec2i(uv_[idx].x*(diffuse_texture->getWidth()), uv_[idx].y*(diffuse_texture->getHeight()));
 	int idx = (faces_[*nfacesElem * iface + nthvert])[1];
-	return Vec2i(uv_[idx].x*(diffuse_texture->getWidth()), uv_[idx].y*(diffuse_texture->getHeight()));
+	return uv_[idx];
 }
+
 
 __device__ int ModelBuffer::face(int i, int idx) {
 	return (faces_[*nfacesElem*i+idx])[0];

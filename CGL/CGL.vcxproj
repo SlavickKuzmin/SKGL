@@ -26,6 +26,7 @@
     <CudaCompile Include="ModelBuffer.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
+    <CudaCompile Include="Rasteriser.cu" />
     <CudaCompile Include="RenderOnGPU.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
@@ -49,11 +50,16 @@
     <ClInclude Include="ModelBuffer.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <CudaCompile Include="Rasteriser.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CudaCompile>
     <ClInclude Include="RenderOnGPU.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="TextureBuffer.cuh" />
+    <ClInclude Include="TextureBuffer.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,7 @@
       <MaxRegCount>200</MaxRegCount>
       <FastMath>true</FastMath>
       <Optimization>Od</Optimization>
+      <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
     <CudaLink>
       <GPUDebugInfo>true</GPUDebugInfo>

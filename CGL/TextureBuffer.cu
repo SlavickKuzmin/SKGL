@@ -30,11 +30,21 @@ __device__ int TextureBuffer::getWidth()
 {
 	return *(this->d_pWidth);
 }
+
 __device__ int TextureBuffer::getHeight()
 {
 	return *(this->d_pHeight);
 }
+
 __device__ int TextureBuffer::getBytesApp()
 {
 	return *(this->d_pBytesApp);
+}
+
+__device__ Color TextureBuffer::get(int x, int y)
+{
+	if (!texture_binary_data || x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
+		return Color();
+	}
+	return Color(texture_binary_data + (x + y * getWidth())*getBytesApp(), getBytesApp());
 }

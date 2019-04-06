@@ -1,7 +1,6 @@
 #ifndef _COLOR_CUH_
 #define _COLOR_CUH_
 
-
 #include "SDL.h"
 #include "cuda_runtime_api.h"
 
@@ -36,6 +35,28 @@ struct Color
 		//	bgra[i] = 0;
 		//}
 	}
+	__device__ unsigned char& operator[](const int i)
+	{ 
+		//return bgra[i];
+		if (i == 0)
+		{
+			return this->blue;
+		}
+		else if (i == 1)
+		{
+			return this->green;
+		}
+		else if (i == 2)
+		{
+			return this->red;
+		}
+		else if (i == 3)
+		{
+			return this->alpha;
+		}
+		return this->alpha;
+	}
+	__device__ Color operator *(float intensity) const;
 };
 
 __device__ Uint32 packRGBAToUint32(ColorByte r, ColorByte g, ColorByte b, ColorByte a);

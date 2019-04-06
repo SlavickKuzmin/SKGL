@@ -1,4 +1,7 @@
-#pragma once
+#ifndef _SCREEN_H_
+#define _SCREEN_H_
+
+
 
 #include "SDL.h"
 
@@ -13,3 +16,5 @@ public:
 	int width;
 	int height;
 };
+
+#endif // !_SCREEN_H_

@@ -87,6 +87,47 @@ __device__ void swapVec3i(Vec3i &x, Vec3i &y)
 
 #define widthScreen 800
 
+
+__device__ void triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport, int ra) {
+	mat<3, 4, float> pts = (Viewport*(*clipc)).transpose(); // transposed to ease access to each of the points
+	mat<3, 2, float> pts2;
+	for (int i = 0; i < 3; i++) pts2[i] = proj<2>(pts[i] / pts[i][3]);
+
+	Vec2f bboxmin(FLT_MAX, FLT_MAX);
+	Vec2f bboxmax(-FLT_MAX, -FLT_MAX);
+	//Vec2f clamp(image.get_width() - 1, image.get_height() - 1);
+	Vec2f clamp(799, 799); // 800-1 800-1
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			bboxmin[j] = fmaxf(0.f, fminf(bboxmin[j], pts2[i][j]));
+			bboxmax[j] = fminf(clamp[j], fmaxf(bboxmax[j], pts2[i][j]));
+		}
+	}
+	Vec2i P;
+	Color color;
+	//printf("bboxmin.x=%f, bboxmax.x=%f\n", bboxmin.x, bboxmax.x);
+	//printf("bboxmin.y=%f, bboxmax.y=%f\n", bboxmin.y, bboxmax.y);
+	for (P.x = bboxmin.x; P.x <= bboxmax.x; P.x++) {
+		for (P.y = bboxmin.y; P.y <= bboxmax.y; P.y++) {
+		//	printf("P.x=%d, P.y=%d\n", P.x, P.y);
+			Vec3f bc_screen = barycentric(pts2[0], pts2[1], pts2[2], P);
+			Vec3f bc_clip = Vec3f(bc_screen.x / pts[0][3], bc_screen.y / pts[1][3], bc_screen.z / pts[2][3]);
+			bc_clip = bc_clip / (bc_clip.x + bc_clip.y + bc_clip.z);
+			float frag_depth = (*clipc)[2] * bc_clip;
+	//		//if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z<0 || zbuffer[P.x + P.y*image.get_width()]>frag_depth) continue;
+			if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z<0 || zbuffer[P.x + P.y * 800]>frag_depth) continue;
+			bool discard = shader->fragment(bc_clip, color);
+			if (!discard) {
+				//printf("P.x=%d, P.y=%d\n", P.x, P.y);
+	//			//zbuffer[P.x + P.y*image.get_width()] = frag_depth;
+				zbuffer[P.x + P.y * 800] = frag_depth;
+	//			//image.set(P.x, P.y, color);
+				setPixel(pixels, pinch, P.x, P.y, &color);
+			}
+		}
+	}
+}
+
 __device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2,
 	void* pixels, int pinch, float intensity, int *zbuffer, ModelBuffer *mb) {
 	//printf("x0=%d, y0=%d || x1=%d, y1=%d || x2=%d, y2=%d\n", uv0.x, uv0.y, uv1.x, uv1.y, uv2.x, uv2.y);

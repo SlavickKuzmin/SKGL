@@ -58,6 +58,7 @@ void runGPURender()
 				quit = true;
 			}
 		}
+		SDL_FillRect(screen->pixels, NULL, 0x000000);
 		render->refresh(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height);
 		screen->setScreen(window);
 	}
