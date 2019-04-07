@@ -27,6 +27,6 @@ __device__ Color Color::operator*(float intensity) const {
 	res.red = res.red * intensity;
 	res.green = res.green * intensity;
 	res.blue = res.blue * intensity;
-	//res.alpha = res.alpha * intensity;
+	res.alpha = 255;
 	return res;
 }

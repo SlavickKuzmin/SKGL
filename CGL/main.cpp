@@ -46,6 +46,9 @@ void runGPURender()
 	//Event handler
 	SDL_Event e;
 
+	float command = 1;
+	float direction = 1;
+
 	//While application is running
 	while (!quit)
 	{
@@ -57,15 +60,53 @@ void runGPURender()
 			{
 				quit = true;
 			}
+			//User presses a key
+			else if (e.type == SDL_KEYDOWN)
+			{
+				//Select surfaces based on key press
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_UP:
+					printf("up=%f\n", direction);
+					direction += 0.1f;
+					break;
+
+				case SDLK_DOWN:
+					printf("down=%f\n", direction);
+					direction += -0.1f;
+					break;
+
+				case SDLK_LEFT:
+					printf("left=%f\n", command);
+					command += 0.1f;
+					break;
+
+				case SDLK_RIGHT:
+					printf("left=%f\n", command);
+					command += -0.1f;
+					break;
+
+				default:
+					break;
+				}
+			}
 		}
-		SDL_FillRect(screen->pixels, NULL, 0x000000);
-		render->refresh(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height);
+		
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				screen->setPixel(i, j, 0xFF000000);
+		render->refresh(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height, direction, command);
+		//for (int i = 0; i < width; i++)
+		//	for (int j = 0; j < height; j++)
+		//		screen->setPixel(i, j, 0xFFFFFFFF);
 		screen->setScreen(window);
+
+		
 	}
 
-
-	delete model;
 	delete screen;
+	delete model;
+	
 	delete render;
 	SDL_DestroyWindow(window);
 	SDL_Quit();

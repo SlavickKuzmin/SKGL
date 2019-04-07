@@ -24,7 +24,7 @@ struct Color
 		this->blue = p[0];
 		this->green = p[1];
 		this->red = p[2];
-		if (bpp < 4)
+		if (bpp > 4)
 		{
 			this->alpha = p[3];
 		}		

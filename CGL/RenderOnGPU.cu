@@ -19,7 +19,8 @@ RenderOnGPU::RenderOnGPU(Model *model, int width, int height)
 	//int *zBufferGPU;
 	cudaMalloc((void**)&zBufferGPU, width*height * sizeof(float));
 	
-	threads_size = 5022;
+	threads_size = 5022; // diablo_pose
+	//threads_size = 2492; // african_head
 	int* arr = splitByThreads(m->nfaces(), threads_size);
 
 	//int *cArr;
@@ -128,52 +129,12 @@ struct Shader : public IShader {
 };
 //==============================================================================================================
 
-__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int first, int last, float *zbuffer, int ra)
+__device__ void part(void* pixels, int pinch, int width, int height, ModelBuffer *mb,
+	int first, int last, float *zbuffer, float ra, float command)
 {
-	////printf("T");
-	//// new with textures
-	////printf("ra=%d\n", ra);
-	//Vec3f light_dir = Vec3f(1, -1, 1).normalize();
-	//Vec3f eye(1, 1, 3);
-	//Vec3f center(0, 0, 0);
-
-	//Matrix ModelView = lookat(eye, center, Vec3f(0, 1, 0));
-	//Matrix Projection = Matrix::identity();
-	//Matrix ViewPort = viewport(width / 8, height / 8, width * 3 / 4, height * 3 / 4);
-	//Projection[3][2] = -1.f / (eye - center).norm();
-
-	//Matrix z = (ViewPort*Projection*ModelView);
-
-	//const int depth = 255;//todo it too
-
-	//for (int i = first; i < last; i++) {
-	//	Vec3i screen_coords[3];
-	//	Vec3f world_coords[3];
-	//	for (int j = 0; j < 3; j++) {
-	//		Vec3f v = mb->vert(mb->face(i, j));
-	//		/*screen_coords[j] = Vec3i((v.x + 1.)*width / 2., (v.y + 1.)*height / 2., (v.z + 1.)*depth / 2.);
-	//		world_coords[j] = v;*/
-	//		screen_coords[j] = m2v(ViewPort*Projection*v2m(v));
-	//		world_coords[j] = v;
-	//	}
-	//	Vec3f n = (world_coords[2] - world_coords[0]) ^ (world_coords[1] - world_coords[0]);
-	//	n.normalize();
-	//	float intensity = n * light_dir;
-	//	if (intensity > 0) {
-	//		//intensity *= ra;
-	//		Vec2i uv[3];
-	//		for (int k = 0; k < 3; k++) {
-	//			uv[k] = mb->uv(i, k);
-	//			//printf("x=%d, y=%d\n", uv[k].x, uv[k].y);
-	//		}
-	//		//printf("h=%d, w=%d, ba=%d\n", mb.diffusemap_.get_height(), mb.diffusemap_.get_width(), mb.diffusemap_.get_bytespp());
-	//		triangleWihTex(screen_coords[0], screen_coords[1], screen_coords[2],
-	//			uv[0], uv[1], uv[2], pixels, pinch, intensity, zbuffer, mb);
-	//	}
-	//}
-	
 	Vec3f light_dir(1, 1, 1);
-	Vec3f       eye(1, 1, 3+ra);
+	Vec3f       eye(command, ra, 1);
+    //Vec3f       eye(1, 1, 3 + ra);
 	Vec3f    center(0, 0, 0);
 	Vec3f        up(0, 1, 0);
 
@@ -225,7 +186,8 @@ __device__ void debugPrint(int *arr, int size)
 	printf("\n");
 }
 
-__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int threads_size, int *arr, float *zbuffer, int ra)
+__global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer *mb, int threads_size, 
+	int *arr, float *zbuffer, float ra, float command)
 {
 	int idx = blockIdx.x*blockDim.x + threadIdx.x;
 	//printf("size=%d\n", threads_size);
@@ -234,7 +196,7 @@ __global__ void draw(void* pixels, int pinch, int width, int height, ModelBuffer
 	{
 		//debugPrint(arr, threads_size + 1);
 		//printf("idx=%d\n", idx);
-		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer, ra);
+		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer, ra, command);
 	}
 
 }
@@ -249,44 +211,32 @@ inline void gpuAssert(cudaError_t code, const char *file, int line)
 	}
 }
 
-int start = -100;
+int start = -50;
 
-void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height)
+void RenderOnGPU::refresh(void* pixels, int pinch, int width, int height, float direction, float command)
 {
+	clock_t begin = clock();
 	void *gpuPixels;
 	int size = height * pinch;
 	cudaMalloc((void**)&gpuPixels, size);
 	cudaMemcpy(gpuPixels, pixels, size, cudaMemcpyHostToDevice);
-	//cudaMemset(gpuPixels, 0, size);
+	//cudaMemset(gpuPixels, 0xFFFFFFFF, size);
 
 	cudaMemcpy(zBufferGPU, zbuffer, width*height * sizeof(float), cudaMemcpyHostToDevice);
-
-	clock_t begin = clock();
 
 	//// parts is 7, res array size 8
 	//int* arr = splitByThreads(5022, 20);
 	//debugPrint(arr, 21);
 	//printf(".");
-	int ra;
-	if (start < 100)
-	{
-		ra = start++;
-	}
-	else
-	{
-		ra = -100;
-		start = -100;
-	}
-	//printf("model=%d, threads_size=%d\n",m->nfaces(), threads_size);
-	draw <<<128, 128 >>> (gpuPixels, pinch, width, height, model, threads_size, cArr, zBufferGPU, ra);
+	printf("model=%d, threads_size=%d\n",m->nfaces(), threads_size);
+	draw <<<128, 128 >>> (gpuPixels, pinch, width, height, model, threads_size, cArr, zBufferGPU, direction, command);
 	gpuErrchk(cudaPeekAtLastError());
 	gpuErrchk(cudaDeviceSynchronize());
-	
-	clock_t end = clock();
-	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-
-	printf("time: %lf\n", elapsed_secs);
 
 	cudaMemcpy(pixels, gpuPixels, size, cudaMemcpyDeviceToHost);
 	cudaFree(gpuPixels);
+
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	//printf("time: %lf\n", elapsed_secs);
 }

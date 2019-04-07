@@ -16,7 +16,7 @@ class RenderOnGPU
 public:
 	RenderOnGPU(Model *model, int width, int height);
 	~RenderOnGPU();
-	void refresh(void* pixels, int pinch, int width, int height);
+	void refresh(void* pixels, int pinch, int width, int height, float direction, float command);
 private:
 	ModelBuffer *model;
 	float *zBufferGPU;
