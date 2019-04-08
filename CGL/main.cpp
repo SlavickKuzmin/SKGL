@@ -96,12 +96,7 @@ void runGPURender()
 			for (int j = 0; j < height; j++)
 				screen->setPixel(i, j, 0xFF000000);
 		render->refresh(screen->pixels->pixels, screen->pixels->pitch, screen->width, screen->height, direction, command);
-		//for (int i = 0; i < width; i++)
-		//	for (int j = 0; j < height; j++)
-		//		screen->setPixel(i, j, 0xFFFFFFFF);
 		screen->setScreen(window);
-
-		
 	}
 
 	delete screen;

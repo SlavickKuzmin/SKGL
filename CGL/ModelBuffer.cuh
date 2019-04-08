@@ -1,3 +1,9 @@
+/*
+ * Description: Contains a API definition for loading .obj files from host structure
+ * to GPU device memory, manipulating with structure and manage all fileds.
+ * Created by Viacheslav Kuzmin 2019
+ */
+
 #ifndef _MODEL_BUFFER_CUH_
 #define _MODEL_BUFFER_CUH_
 
