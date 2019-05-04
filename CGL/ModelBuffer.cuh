@@ -13,31 +13,80 @@
 #include "Color.cuh"
 #include "TextureBuffer.cuh"
 
-class ModelBuffer {
-public:
-	Vec3f *verts_;
-	Vec3i *faces_; // 2darray attention, this Vec3i means vertex/uv/normal
-	Vec3f *norms_;
-    Vec2f *uv_;
-	ModelBuffer(Model *model);
-	~ModelBuffer();
-	int *nverts;
-    int *nfaces;
-	int *nfacesElem;
-	__device__ int* getNVerts();
-	__device__ int* getNFaces();
-	__device__ int* getNFacesElem();
-	__device__ Vec3f normal(int iface, int nthvert);
-	__device__ Vec3f normal(Vec2f uv);
-	__device__ Vec3f vert(int i);
-	__device__ Vec3f vert(int iface, int nthvert);
-	//__device__ Vec2i uv(int iface, int nthvert);//obsolete REMOVE IT
-	__device__ Vec2f uv(int iface, int nthvert);
-	__device__ int face(int i, int idx);
-	__device__ Color diffuse(Vec2f uvf);
-	// diffuse texture
-	TextureBuffer *diffuse_texture;
-	TextureBuffer *normal_map_texture;
-};
+namespace gl
+{
+
+	using namespace gl::computing;
+
+	/*
+	 Represents a stored in device(GPU) memory model
+	 buffer that allow get all information about model.
+	 */
+	class ModelBuffer {
+	public:
+		// Vertex collection.
+		Vec3f *verts_;
+
+		// Faces colection.
+		Vec3i *faces_; // 2darray attention, this Vec3i means vertex/uv/normal
+
+		// Collection of normals vectors.
+		Vec3f *norms_;
+
+		// Collection of uvs vectors.
+		Vec2f *uv_;
+
+		// Construct a model buffer from given CPU-stored model.
+		ModelBuffer(Model *model);
+
+		// Destructor: free all allocated GPU memory.
+		~ModelBuffer();
+
+		// Poiter to vertex number.
+		int *nverts;
+
+		// Pointer to faces number;
+		int *nfaces;
+
+		// Poiter to faces elements number.
+		int *nfacesElem;
+
+		// Gets a pointer to vertex number.
+		__device__ int* getNVerts();
+
+		// Gets a pointer to faces number.
+		__device__ int* getNFaces();
+
+		// Gets a pointer to faces element number.
+		__device__ int* getNFacesElem();
+
+		// Return a normal vector.
+		__device__ Vec3f normal(int iface, int nthvert);
+
+		// Return a normal vector from UV vector.
+		__device__ Vec3f normal(Vec2f uv);
+
+		// Return a vertex by index. 
+		__device__ Vec3f vert(int i);
+
+		// Return a vertex.
+		__device__ Vec3f vert(int iface, int nthvert);
+
+		// Return a UV vector.
+		__device__ Vec2f uv(int iface, int nthvert);
+
+		// Return a face.
+		__device__ int face(int i, int idx);
+
+		// Return a color for given UV vector.
+		__device__ gl::Color::Device diffuse(Vec2f uvf);
+
+		// Pointer to diffuse map texture buffer.
+		TextureBuffer *diffuse_texture;
+
+		// Pointer to nornal map texture buffer.
+		TextureBuffer *normal_map_texture;
+	};
+}
 
 #endif

@@ -13,12 +13,6 @@
     <CudaCompile Include="cuda_geometry.cuh">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="Helpers.cu">
-      <Filter>GPU</Filter>
-    </CudaCompile>
-    <CudaCompile Include="Helpers.cuh">
-      <Filter>GPU</Filter>
-    </CudaCompile>
     <CudaCompile Include="RenderOnGPU.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
@@ -28,10 +22,16 @@
     <CudaCompile Include="TextureBuffer.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="Rasteriser.cu">
+    <CudaCompile Include="Drawing.cu">
       <Filter>GPU</Filter>
     </CudaCompile>
-    <CudaCompile Include="Rasteriser.cuh">
+    <CudaCompile Include="Drawing.cuh">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Camera.cu">
+      <Filter>GPU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Camera.cuh">
       <Filter>GPU</Filter>
     </CudaCompile>
   </ItemGroup>
@@ -44,6 +44,9 @@
       <Filter>Utilitis</Filter>
     </ClCompile>
     <ClCompile Include="model.cpp">
+      <Filter>Utilitis</Filter>
+    </ClCompile>
+    <ClCompile Include="CudaUtils.cpp">
       <Filter>Utilitis</Filter>
     </ClCompile>
   </ItemGroup>
@@ -64,6 +67,12 @@
       <Filter>GPU</Filter>
     </ClInclude>
     <ClInclude Include="TextureBuffer.cuh">
+      <Filter>GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="CudaUtils.h">
+      <Filter>Utilitis</Filter>
+    </ClInclude>
+    <ClInclude Include="IShader.cuh">
       <Filter>GPU</Filter>
     </ClInclude>
   </ItemGroup>

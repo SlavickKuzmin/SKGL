@@ -11,43 +11,47 @@
 #include "Color.cuh"
 #include "cuda_runtime_api.h"
 
-/*
- * API definition for loading and work with textures
- * in GPU memory. 
-*/
-class TextureBuffer
+namespace gl
 {
-public:
-	// Construct a class from image stored on CPU memory, 
-	// allocate GPU memory.
-	TextureBuffer(TGAImage &image);
 
-	// Free all used GPU memory.
-	~TextureBuffer();
+	/*
+	 * API definition for loading and work with textures
+	 * in GPU memory.
+	*/
+	class TextureBuffer
+	{
+	public:
+		// Construct a class from image stored on CPU memory, 
+		// allocate GPU memory.
+		TextureBuffer(TGAImage &image);
 
-	// Binary data container, store all texture data (RGBA).
-	unsigned char *texture_binary_data;
+		// Free all used GPU memory.
+		~TextureBuffer();
 
-	// Device pointer to texture width.
-	int *d_pWidth;
+		// Binary data container, store all texture data (RGBA).
+		unsigned char *texture_binary_data;
 
-	// Device pointer to texture height.
-	int *d_pHeight;
+		// Device pointer to texture width.
+		int *d_pWidth;
 
-	// Device pointer to texture Bytes App.
-	int *d_pBytesApp;
+		// Device pointer to texture height.
+		int *d_pHeight;
 
-	// Gets a texture width.
-	__device__ int getWidth();
+		// Device pointer to texture Bytes App.
+		int *d_pBytesApp;
 
-	// Gets a texture height.
-	__device__ int getHeight();
+		// Gets a texture width.
+		__device__ int getWidth();
 
-	// Gets a texture bytes app.
-	__device__ int getBytesApp();
+		// Gets a texture height.
+		__device__ int getHeight();
 
-	// Gets a texture pixel color from specific position (x and y coords).
-	__device__ Color get(int x, int y);
-};
+		// Gets a texture bytes app.
+		__device__ int getBytesApp();
+
+		// Gets a texture pixel color from specific position (x and y coords).
+		__device__ gl::Color::Device get(int x, int y);
+	};
+}
 
 #endif // !_TEXTURE_BUFFER_CUH_

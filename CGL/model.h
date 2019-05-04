@@ -5,6 +5,8 @@
 #include "cuda_geometry.cuh"
 #include "tgaimage.h"
 
+using namespace gl::computing;
+
 class Model {
 public:
     std::vector<Vec3f> verts_;

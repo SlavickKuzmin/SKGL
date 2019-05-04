@@ -6,26 +6,47 @@
 #include "ModelBuffer.cuh"
 #include "cuda_runtime_api.h"
 #include <time.h>
-#include "Rasteriser.cuh"
-#include "Helpers.cuh"
+#include "Camera.cuh"
+#include "Drawing.cuh"
+#include "IShader.cuh"
 
-int* splitByThreads(int model, int parts);
+using namespace gl::computing;
 
-class RenderOnGPU
+namespace gl
 {
-public:
-	RenderOnGPU(Model *model, int width, int height);
-	~RenderOnGPU();
-	void refresh(void* pixels, int pinch, int width, int height, float direction, float command);
-private:
-	ModelBuffer *model;
-	float *zBufferGPU;
-	int *cArr;
-	int threads_size;
-	Model *m;
-	int width;
-	int height;
-	float *zbuffer;
-};
+	int* splitByThreads(int model, int parts);
 
+	// Enum for choose render mode.
+	enum RenderMode
+	{
+		Shaders = 0,
+		Wire = 1,
+		Filled = 2,
+		ShadersWithWire = 3
+	};
+
+	class RenderOnGPU
+	{
+	public:
+		RenderOnGPU(Model *model, Screen *screen);
+		~RenderOnGPU();
+		void refresh(float direction, float command, RenderMode mode);
+		float& GetRenderFrameTime();
+	private:
+		gl::ModelBuffer *model;
+		float *zBufferGPU;
+		int *cArr;
+		int threads_size;
+		Model *m;
+		Screen *screen;
+		int width;
+		int height;
+		float *zbuffer;
+		float renderFrameTime;
+		// Screen
+		void *h_pixels;
+		void *d_pixels;
+		int pinch;
+	};
+}
 #endif //_RENDER_ON_GPU_CUH_

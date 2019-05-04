@@ -8,7 +8,7 @@
 
 // Construct a class from image stored on CPU memory, 
 // allocate GPU memory.
-TextureBuffer::TextureBuffer(TGAImage &image)
+gl::TextureBuffer::TextureBuffer(TGAImage &image)
 {
 	// Allocate device memory for data storage.
 	cudaMalloc((void**)&d_pWidth, sizeof(int));
@@ -27,7 +27,7 @@ TextureBuffer::TextureBuffer(TGAImage &image)
 }
 
 // Free all used GPU memory.
-TextureBuffer::~TextureBuffer()
+gl::TextureBuffer::~TextureBuffer()
 {
 	// Free all alocated device memory.
 	cudaFree(texture_binary_data);
@@ -37,31 +37,31 @@ TextureBuffer::~TextureBuffer()
 }
 
 // Gets a texture width.
-__device__ int TextureBuffer::getWidth()
+__device__ int gl::TextureBuffer::getWidth()
 {
 	return *(this->d_pWidth);
 }
 
 // Gets a texture height.
-__device__ int TextureBuffer::getHeight()
+__device__ int gl::TextureBuffer::getHeight()
 {
 	return *(this->d_pHeight);
 }
 
 // Gets a texture bytes app.
-__device__ int TextureBuffer::getBytesApp()
+__device__ int gl::TextureBuffer::getBytesApp()
 {
 	return *(this->d_pBytesApp);
 }
 
 // Gets a texture pixel color from specific position (x and y coords).
-__device__ Color TextureBuffer::get(int x, int y)
+__device__ gl::Color::Device gl::TextureBuffer::get(int x, int y)
 {
 	// Validate input parameters.
 	if (!texture_binary_data || x < 0 || y < 0 || x >= getWidth() || y >= getHeight()) {
-		return Color();
+		return gl::Color::Device();
 	}
 
 	// return a requested color.
-	return Color(texture_binary_data + (x + y * getWidth())*getBytesApp(), getBytesApp());
+	return gl::Color::Device(texture_binary_data + (x + y * getWidth())*getBytesApp(), getBytesApp());
 }

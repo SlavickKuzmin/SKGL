@@ -19,6 +19,7 @@
       <FileType>CppCode</FileType>
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
+    <ClCompile Include="CudaUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -26,7 +27,7 @@
     <CudaCompile Include="ModelBuffer.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
-    <CudaCompile Include="Rasteriser.cu" />
+    <CudaCompile Include="Camera.cu" />
     <CudaCompile Include="RenderOnGPU.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
@@ -40,17 +41,21 @@
     <CudaCompile Include="cuda_geometry.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
+    <ClInclude Include="CudaUtils.h" />
+    <ClInclude Include="IShader.cuh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="model.h" />
     <CudaCompile Include="cuda_geometry.cu">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </CudaCompile>
-    <CudaCompile Include="Helpers.cuh">
+    <CudaCompile Include="Drawing.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
     <ClInclude Include="ModelBuffer.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <CudaCompile Include="Rasteriser.cuh">
+    <CudaCompile Include="Camera.cuh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CudaCompile>
     <ClInclude Include="RenderOnGPU.cuh">
@@ -63,7 +68,7 @@
     <ClInclude Include="tgaimage.h" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Helpers.cu">
+    <CudaCompile Include="Drawing.cu">
       <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemGroup>
