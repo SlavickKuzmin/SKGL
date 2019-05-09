@@ -30,7 +30,7 @@ namespace gl
 	public:
 		RenderOnGPU(Model *model, Screen *screen);
 		~RenderOnGPU();
-		void refresh(float direction, float command, RenderMode mode);
+		void refresh(Vec3f light_dir, Vec3f eye, Vec3f center, Vec3f up, RenderMode mode);
 		float& GetRenderFrameTime();
 	private:
 		gl::ModelBuffer *model;

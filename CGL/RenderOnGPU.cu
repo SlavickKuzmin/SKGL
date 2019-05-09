@@ -21,7 +21,7 @@ gl::RenderOnGPU::RenderOnGPU(Model *model, Screen *screen)
 	//int *zBufferGPU;
 	cudaMalloc((void**)&zBufferGPU, width*height * sizeof(float));
 	
-	threads_size = 5022; // diablo_pose
+	threads_size = model->faces_.size(); // diablo_pose
 	//threads_size = 2492; // african_head
 	int* arr = splitByThreads(m->nfaces(), threads_size);
 
@@ -136,13 +136,9 @@ struct Shader : public gl::IShader {
 //==============================================================================================================
 
 __device__ void part(void* pixels, int pinch, int width, int height, gl::ModelBuffer *mb,
-	int first, int last, float *zbuffer, float ra, float command, gl::RenderMode mode)
+	int first, int last, float *zbuffer,
+	Vec3f light_dir, Vec3f eye, Vec3f center, Vec3f up, gl::RenderMode mode)
 {
-	Vec3f light_dir(1, 1, 1);
-	Vec3f       eye(command, ra, 1);
-	Vec3f    center(0, 0, 0);
-	Vec3f        up(0, 1, 0);
-
 	Matrix ModelView;
 	Matrix Viewport;
 	Matrix Projection;
@@ -162,7 +158,7 @@ __device__ void part(void* pixels, int pinch, int width, int height, gl::ModelBu
 				shader.vertex(i, j);
 			}
 			////	//triangle(shader.varying_tri, shader, frame, zbuffer);
-			gl::draw::triangle_s(shader.varying_tri, &shader, pixels, pinch, zbuffer, Viewport, ra);
+			gl::draw::triangle_s(shader.varying_tri, &shader, pixels, pinch, zbuffer, Viewport);
 		}
 	}
 	else if (mode == gl::RenderMode::Filled)
@@ -205,7 +201,7 @@ __device__ void part(void* pixels, int pinch, int width, int height, gl::ModelBu
 				screen_coords[j] = Vec3f(result[0][0] / result[3][0], result[1][0] / result[3][0], result[2][0] / result[3][0]);
 			}
 			////	//triangle(shader.varying_tri, shader, frame, zbuffer);
-			gl::draw::triangle_s(shader.varying_tri, &shader, pixels, pinch, zbuffer, Viewport, ra);
+			gl::draw::triangle_s(shader.varying_tri, &shader, pixels, pinch, zbuffer, Viewport);
 
 			gl::draw::line(screen_coords[0].x, screen_coords[0].y, screen_coords[1].x, screen_coords[1].y, pixels, pinch, &gl::Color::Device(255, 0, 0));
 			gl::draw::line(screen_coords[1].x, screen_coords[1].y, screen_coords[2].x, screen_coords[2].y, pixels, pinch, &gl::Color::Device(0, 255, 0));
@@ -242,7 +238,7 @@ __device__ void debugPrint(int *arr, int size)
 }
 
 __global__ void SplitByMPs(void* pixels, int pinch, int width, int height, gl::ModelBuffer *mb, int threads_size,
-	int *arr, float *zbuffer, float ra, float command, gl::RenderMode mode)
+	int *arr, float *zbuffer, Vec3f light_dir, Vec3f eye, Vec3f center, Vec3f up, gl::RenderMode mode)
 {
 	int idx = blockIdx.x*blockDim.x + threadIdx.x;
 	//printf("size=%d\n", threads_size);
@@ -251,7 +247,8 @@ __global__ void SplitByMPs(void* pixels, int pinch, int width, int height, gl::M
 	{
 		//debugPrint(arr, threads_size + 1);
 		//printf("idx=%d\n", idx);
-		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer, ra, command, mode);
+		part(pixels, pinch, width, height, mb, arr[idx], arr[idx + 1], zbuffer,
+			light_dir, eye, center, up, mode);
 	}
 
 }
@@ -265,14 +262,17 @@ inline void gpuAssert(cudaError_t code, const char *file, int line)
 	}
 }
 
-void gl::RenderOnGPU::refresh(float direction, float command, RenderMode mode)
+void gl::RenderOnGPU::refresh(Vec3f light_dir, Vec3f eye, Vec3f center, Vec3f up, RenderMode mode)
 {
 	clock_t begin = clock();
 
 	cudaMemcpy(this->d_pixels, this->h_pixels, height * pinch, cudaMemcpyHostToDevice);
 	cudaMemcpy(zBufferGPU, zbuffer, width*height * sizeof(float), cudaMemcpyHostToDevice);
 
-	SplitByMPs <<<128, 128 >>> (this->d_pixels, pinch, width, height, model, threads_size, cArr, zBufferGPU, direction, command, mode);
+	SplitByMPs <<<128, 512 >>> (this->d_pixels, pinch, width,
+		height, model, threads_size, cArr,
+		zBufferGPU,
+		light_dir, eye, center, up, mode);
 
 	//printf("model=%d, threads_size=%d\n",m->nfaces(), threads_size);
 	//RenderSadersMode <<<128, 128 >>> (this->d_pixels, pinch, width, height, model, threads_size, cArr, zBufferGPU, direction, command);

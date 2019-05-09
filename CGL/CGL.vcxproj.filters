@@ -75,6 +75,9 @@
     <ClInclude Include="IShader.cuh">
       <Filter>GPU</Filter>
     </ClInclude>
+    <ClInclude Include="nuklear_sdl_gl2.h">
+      <Filter>Utilitis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GPU">

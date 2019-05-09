@@ -44,7 +44,7 @@ namespace gl
 		__device__ void triangleZBuf(Vec3i t0, Vec3i t1, Vec3i t2, void* pixels, int pinch, Color::Device *col, float *zbuffer);
 		__device__ void triangleWihTex(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i uv0, Vec2i uv1, Vec2i uv2, void* pixels,
 			int pinch, float intensity, int *zbuffer, ModelBuffer *mb);
-		__device__ void triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport, int ra);
+		__device__ void triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport);
 
 		void SetPixel(Screen *screen, int x, int y, Color::Host color);
 		void SetLine(Screen *screen, int x0, int y0, int x1, int y1, Color::Host color);

@@ -32,7 +32,7 @@ __device__ void swapVec3i(Vec3i &x, Vec3i &y)
 #define widthScreen 800
 
 
-__device__ void gl::draw::triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport, int ra) {
+__device__ void gl::draw::triangle_s(mat<4, 3, float> *clipc, IShader *shader, void* pixels, int pinch, float *zbuffer, Matrix &Viewport) {
 	mat<3, 4, float> pts = (Viewport*(*clipc)).transpose(); // transposed to ease access to each of the points
 	mat<3, 2, float> pts2;
 	for (int i = 0; i < 3; i++) pts2[i] = proj<2>(pts[i] / pts[i][3]);

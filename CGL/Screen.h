@@ -27,6 +27,8 @@ namespace gl
 		// Set screen to given window.
 		void setScreen(SDL_Window *window);
 
+		int  GetTextureScreen();
+
 		// Clear screen with given color.
 		void ClearScreen(gl::Color::Host &ClearColor);
 

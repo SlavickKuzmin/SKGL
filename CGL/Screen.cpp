@@ -1,6 +1,8 @@
 #include "Screen.h"
 #include <stdio.h>
 
+#include <GL/glut.h>
+
 // Constructor: create a surface with given width and heigth.
 gl::Screen::Screen(int width, int height)
 {
@@ -51,6 +53,31 @@ void gl::Screen::setScreen(SDL_Window *window)
 {
 	SDL_BlitSurface(pixels, 0, SDL_GetWindowSurface(window), 0);
 	SDL_UpdateWindowSurface(window);
+}
+
+int  gl::Screen::GetTextureScreen()
+{
+	//SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, pixels);
+	GLuint TextureID = 0;
+
+	glGenTextures(1, &TextureID);
+	glBindTexture(GL_TEXTURE_2D, TextureID);
+
+	int Mode = GL_RGB;
+
+	if (pixels->format->BytesPerPixel == 4) {
+		Mode = GL_RGBA;
+	}
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, Mode, pixels->w, pixels->h, 0, Mode, GL_UNSIGNED_BYTE, pixels->pixels);
+
+	return TextureID;
+	//return tex;
 }
 
 // Clear screen with given color.
