@@ -15,5 +15,6 @@ Example on YouTube: https://youtu.be/E1w57muC8z0
 
 Library based on github project: https://github.com/ssloy/tinyrenderer
 For UI used nuklear :https://github.com/vurtun/nuklear
+For change screen buffers used SDL 2.0, because operation system deny write directly to video memory.
 
 P.S. Is my diploma work for KPI, Kiev 2019. Name SKGL is abbriviation of Slavick Kuzmin Graphics Library.
