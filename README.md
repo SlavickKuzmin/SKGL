@@ -9,7 +9,9 @@ SKGL is a simple graphics library implementation (my opengl implementation) that
 This library used CUDA SDK for render 3D objects on graphics accelerator.
 
 # Result render
-![rendered on library image](https://raw.githubusercontent.com/SlavickKuzmin/SKGL/master/ReadMeResources/ResultRenderInRealTime.png?token=ADL52TVOE5RXHRIDPUD2P325A2LVK)
+![rendered on library image](https://raw.githubusercontent.com/SlavickKuzmin/SKGL/master/ReadMeResources/ResultRenderInRealTime.png)
+
+Example on YouTube: https://youtu.be/E1w57muC8z0
 
 Library based on github project: https://github.com/ssloy/tinyrenderer
 For UI used nuklear :https://github.com/vurtun/nuklear
